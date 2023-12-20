@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Rompecabezas",
+    "description": "Hasbro",
+    "price": 450,
+    "img": "sin imagen",
+    "code": "abc124",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "title": "Estanciero",
+    "description": "Toys",
+    "price": 200,
+    "img": "sin imagen",
+    "code": "abc125",
+    "stock": 40
+  },
+  {
+    "id": 3,
+    "title": "Puzzle",
+    "description": "toys",
+    "price": 750,
+    "img": "sin imagen",
+    "code": "abc126",
+    "stock": 60
+  },
+  {
+    "id": 4,
+    "title": "Juegos Didacticos",
+    "description": "Aprender",
+    "price": 7550,
+    "img": "Sin imagen",
+    "code": "abc127",
+    "stock": 25
+  },
+  {
+    "id": 5,
+    "title": "Lego",
+    "description": "LEGO",
+    "price": 10050,
+    "img": "Sin imagen",
+    "code": "abc128",
+    "stock": 35
+  },
+  {
+    "id": 6,
+    "title": "HotWheels",
+    "description": "Mattel",
+    "price": 3500,
+    "img": "Sin imagen",
+    "code": "abc129",
+    "stock": 70
+  },
+  {
+    "id": 7,
+    "title": "Terreneitor",
+    "description": "DiToys",
+    "price": 7550,
+    "img": "Sin imagen",
+    "code": "abc130",
+    "stock": 25
+  },
+  {
+    "id": 8,
+    "title": "Plastilina",
+    "description": "Hasbro",
+    "price": 5559,
+    "img": "Sin imagen",
+    "code": "abc131",
+    "stock": 15
+  },
+  {
+    "id": 9,
+    "title": "Cocinita Infantil",
+    "description": "Aprender",
+    "price": 9500,
+    "img": "Sin imagen",
+    "code": "abc132",
+    "stock": 26
+  },
+  {
+    "id": 10,
+    "title": "Juegos de Ingenio",
+    "description": "Mattel",
+    "price": 6550,
+    "img": "Sin imagen",
+    "code": "abc133",
+    "stock": 15
+  }
+]
