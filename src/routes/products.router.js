@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-//const path = require('path');
-
 const ProductManager = require("../controllers/product-manager.js");
 const productManager = new ProductManager("./src/models/productos.json");
 
@@ -22,7 +20,6 @@ router.get("/", async (req, res) => {
     }
 })
 
-
 router.post('/', async (req, res) => {
     const { title, description, price, img, code, stock, category } = req.body;
     try {
@@ -33,28 +30,6 @@ router.post('/', async (req, res) => {
         res.status(404).json({ status: "error", message: "Error al crear el producto" });
     }
 });
-
-/* router.post("/products", async (req, res) => { //---/product
-    try {
-         //leerArchivo()
-        const { title, description, price, img, code, stock } = req.body;
-        //const productoNuevo = req.body;
-        
-        if (productoNuevo) {
-            const nuevoArrayProductos = await productManager.addProduct({ title, description, price, img, code, stock });
-            nuevoArrayProductos.push(productoNuevo);
-            console.log(nuevoArrayProductos);
-            res.json({ status: "success", message: "Producto Creado Correctamente" });
-            return res.json(nuevoArrayProductos);
-        } else {
-            return res.json("El producto no se pudo cargar");
-        }
-    } catch (error) {
-        console.error("Producto no creado", error);
-        res.status(404).json({ status: "error", message: "Error al crear el producto" });
-        //res.json("Error al crear el producto");
-    }
-}) */
 
 router.get("/:pid", async (req, res) => {
     let pid = req.params.pid;
@@ -85,7 +60,6 @@ router.put('/:pid', async (req, res) => {
     }
 });
 
-// Ruta DELETE /api/products/:pid
 router.delete('/:pid', async (req, res) => {
     const productId = parseInt(req.params.pid);
     try {
