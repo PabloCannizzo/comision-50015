@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "title": "Herramientas para Niños",
+    "description": "Toys",
+    "price": 10000,
+    "thumbnails": "sin imagen",
+    "code": "abc137",
+    "stock": 188,
+    "category": "Infantil"
+  },
+  {
+    "id": 2,
+    "title": "Legos",
+    "description": "Lego",
+    "price": 22500,
+    "thumbnails": [],
+    "code": "abc131",
+    "stock": 35,
+    "status": true,
+    "category": "Infantil"
+  },
+  {
+    "id": 3,
+    "title": "Transformers",
+    "description": "Mattel",
+    "price": 32500,
+    "thumbnails": [],
+    "code": "abc132",
+    "stock": 35,
+    "status": true,
+    "category": "Infantil"
+  },
+  {
+    "id": 4,
+    "title": "Estanciero",
+    "description": "Toys Toys",
+    "price": 7000,
+    "thumbnails": [],
+    "code": "abc133",
+    "stock": 10,
+    "status": true,
+    "category": "Infantil"
+  },
+  {
+    "id": 5,
+    "title": "HotWheels",
+    "description": "Mattel",
+    "price": 6000,
+    "thumbnails": [],
+    "code": "abc134",
+    "stock": 15,
+    "status": true,
+    "category": "Infantil"
+  },
+  {
+    "id": 6,
+    "title": "Plastilinas",
+    "description": "DiToys",
+    "price": 6000,
+    "thumbnails": [],
+    "code": "abc135",
+    "stock": 15,
+    "status": true,
+    "category": "Infantil"
+  },
+  {
+    "id": 7,
+    "title": "Rompecabezas",
+    "description": "Toys",
+    "price": 1500,
+    "thumbnails": [],
+    "code": "abc136",
+    "stock": 10,
+    "status": true,
+    "category": "Juegos Didacticos"
+  },
+  {
+    "id": 8,
+    "title": "Puzzle",
+    "description": "DiToys",
+    "price": 1500,
+    "thumbnails": [],
+    "code": "abc137",
+    "stock": 10,
+    "status": true,
+    "category": "Juegos Didacticos"
+  },
+  {
+    "id": 9,
+    "title": "Terreneitor",
+    "description": "DiToys",
+    "price": 10500,
+    "thumbnails": [],
+    "code": "abc138",
+    "stock": 10,
+    "status": true,
+    "category": "Infantiles"
+  },
+  {
+    "id": 11,
+    "title": "Cocinita Infantil",
+    "description": "Toys",
+    "price": 8900,
+    "thumbnails": [],
+    "code": "abc140",
+    "stock": 29,
+    "status": true,
+    "category": "Juegos Didacticos"
+  },
+  {
+    "id": 12,
+    "title": "Juegos de Ingenio actualizado",
+    "description": "Toys",
+    "price": 8900,
+    "thumbnails": [],
+    "code": "abc140",
+    "stock": 29,
+    "status": true,
+    "category": "Juegos Didacticos",
+    "img": "sin imagen"
+  },
+  {
+    "id": 14,
+    "title": "Cancionero Niños",
+    "description": "Toys Toys",
+    "price": 6200,
+    "thumbnails": [],
+    "code": "abc142",
+    "stock": 12,
+    "status": true,
+    "category": "Juegos Didacticos"
+  }
+]
