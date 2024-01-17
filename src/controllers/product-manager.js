@@ -21,10 +21,10 @@ class ProductManager {
     }
 
     async loadProducts() {
-        try {
+        try { //veeeeeeer
             if (await fs.stat(this.path)) {
-                const data = await fs.readFile(this.path, 'utf8');
-                console.log("Productos guardados en el JSON:", data);
+                const data = await fs.readFile(this.path, 'utf-8');
+                //console.log("Productos guardados en el JSON", data); //(Desbloquear para mostrar por consola)
                 this.products = JSON.parse(data);
                 this.nextProductId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1;
             }
@@ -40,7 +40,7 @@ class ProductManager {
 
     async saveProducts() {
         try {
-            await fs.writeFile(this.path, JSON.stringify(this.products, null, 2), 'utf8');
+            await fs.writeFile(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
         } catch (err) {
             console.error("Error al guardar los productos:", err);
         }
@@ -98,6 +98,4 @@ class ProductManager {
         }
     }
 }
-
-
 module.exports = ProductManager;

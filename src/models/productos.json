@@ -130,5 +130,49 @@
     "stock": 12,
     "status": true,
     "category": "Juegos Didacticos"
+  },
+  {
+    "id": 15,
+    "title": "juegos",
+    "description": "juegos",
+    "price": 10000,
+    "thumbnails": [],
+    "code": "abc155",
+    "stock": 10,
+    "status": true,
+    "category": "infantil"
+  },
+  {
+    "id": 16,
+    "title": "juegos",
+    "description": "juegos",
+    "price": 10000,
+    "thumbnails": [],
+    "code": "abc155",
+    "stock": 10,
+    "status": true,
+    "category": "infantil"
+  },
+  {
+    "id": 17,
+    "title": "juegos",
+    "description": "juegos",
+    "price": 10000,
+    "thumbnails": [],
+    "code": "abc155",
+    "stock": 10,
+    "status": true,
+    "category": "infantil"
+  },
+  {
+    "id": 18,
+    "title": "Crucijuegos",
+    "description": "DiToys",
+    "price": 1000,
+    "thumbnails": [],
+    "code": "abc188",
+    "stock": 5,
+    "status": true,
+    "category": "Infantil"
   }
 ]
