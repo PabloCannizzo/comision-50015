@@ -2,3 +2,7 @@ h1{
     color: red;
     text-align: center;
 }
+.card{
+    background-color: bisque;
+    margin: auto;
+}

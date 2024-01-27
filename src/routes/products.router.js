@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     const { title, description, price, img, code, stock, category } = req.body;
     try {
         await productManager.addProduct({ title, description, price, img, code, stock, category });
@@ -47,7 +47,7 @@ router.get("/:pid", async (req, res) => {
     }
 })
 
-router.put('/:pid', async (req, res) => {
+router.put("/:pid", async (req, res) => {
     const productId = parseInt(req.params.pid);
     const updatedProduct = req.body;
     try {
@@ -60,7 +60,7 @@ router.put('/:pid', async (req, res) => {
     }
 });
 
-router.delete('/:pid', async (req, res) => {
+router.delete("/:pid", async (req, res) => {
     const productId = parseInt(req.params.pid);
     try {
         if(productId){

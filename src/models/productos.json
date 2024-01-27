@@ -155,23 +155,12 @@
   },
   {
     "id": 17,
-    "title": "juegos",
-    "description": "juegos",
-    "price": 10000,
-    "thumbnails": [],
-    "code": "abc155",
-    "stock": 10,
-    "status": true,
-    "category": "infantil"
-  },
-  {
-    "id": 18,
-    "title": "Crucijuegos",
+    "title": "Crucigramas",
     "description": "DiToys",
-    "price": 1000,
+    "price": 5000,
     "thumbnails": [],
-    "code": "abc188",
-    "stock": 5,
+    "code": "abc888",
+    "stock": 15,
     "status": true,
     "category": "Infantil"
   }
