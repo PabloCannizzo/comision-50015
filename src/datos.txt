@@ -1,0 +1,31 @@
+Comando para la Consola...
+
+//" show dbs " (me lista la base de datos instaladas)
+
+//" use " (me sirve para posicionarme en la base de datos ya creada o bien si no existe crear una nueva con el nombre que le ingresemos-- la base de datos se termina de crear cuando tiene algun dato almacenado o cargado, sino no se creara.).
+
+// "cls" (limpio pantalla de actual).
+
+// " db.createCollection("nombre")"(me sirve para crear una base de datos dentro del documento).
+
+// " db " (Me sirve para ver en que archivo estoy posicionado).
+
+//" db.dropDatabase() "(Para eliminar una base de datos primero debemos posicionarnos en ella para poder borrarla, para ellos podemos usar el comando "db" que nos dice donde estamos posicionados y luego eliminarla en el caso que estemos en ella. caso contrario, debemos ingresar a la base de datos primero con "use" y proceder.)
+
+// "db.help" (Nos brinda todos los comandos de la base de datos).
+
+//" show collection " (Me pone en lista toda las base de datos creadas).
+
+// "db.nombre.drop()" (Sirve para eliminar una coleccion dentro de una base de datos).
+
+// "db.nombredelacoleccion.insertOne(agrego el formato adopatado por el VSCode) (Agregar un nuevo elemento/documento a la coleccion).
+
+// "db.nombredelacoleccion.find()" (comando de lectura que se encuentren dentro de la coleccion).
+
+// "db.nombredelacoleccion.insertMany(agrego el formato adopatado por el VSCode)" (Me sirve para agregar varios elementos a la coleccion):
+
+// db.nombredelacoleccion.findOne({"especie":"perro"}) // con el elemento que cumpla con ese criterio, pero solo el primero.
+
+// "db.mascotas.find({"especie": "perro"}) " (Para mostrarme todos los elementos qye cumplan con el criterio).
+
+

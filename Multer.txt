@@ -9,5 +9,5 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage}); // dest: "./src/public/img"  (Primer forma. Se guarda sin especificar nombre)
 app.post("/upload", upload.single("imagen"), (req, res) => {
-    res.send("lo subimos con exito!");
+    res.send("Archivo cargado con exito!");
 })
