@@ -1,37 +1,40 @@
 const socket = io();
+console.log("Bienvenido Usuario");
 
-let user;
-const chatBox = document.getElementById("chatBox");
+socket.on("productos", (data) => {
+    renderProductos(data);
+});
 
-Swal.fire({
-    title: "Identificate",
-    input: "text",
-    text: "Ingresa un usuario para identificarte en el chat",
-    inputValidator: (value) => {
-        return !value && "Necesitas escribir un nombre para continuar"
-    },
-    allowOutsideClick: false,
-}).then(result => {
-    user = result.value;
-})
+const renderProductos = (productos) => {
+    const contenedorProductos = document.getElementById("contenedorProductos");
+    contenedorProductos.innerHTML = "";
+    productos.forEach(item => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+            <p>Id: ${item.id} </p>
+            <p>Titulo: ${item.title} </p>
+            <p>Description: ${item.description} </p>
+            <p>Precio: $${item.price} </p>
+            <p>stock: ${item.stock} </p>
+            <button id="btnAgregar"> Agregar Producto </button>
+        `;
+    });
+}
 
+const eliminarProducto = (id) => {
+    socket.emit("eliminarProducto", id);
+}
 
-chatBox.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-        if (chatBox.value.trim().length > 0) {
-            socket.emit("message", { user: user, message: chatBox.value });
-            chatBox.value = "";
-        }
-    }
-})
+document.getElementById("btnAgregar").addEventListener("click", () => {
+    agregarProducto();
+});
 
+const agregarProducto = () => {
+    socket.emit("agregarProducto", producto);
+};
 
-socket.on("message", data => {
-    let log = document.getElementById("messagesLogs");
-    let messages = "";
+socket.on("productos", (data) => {
+    renderProductos(data);
+});
 
-    data.forEach(message => {
-        messages = messages + `${message.user} dice: ${message.message} <br>`
-    })
-    log.innerHTML = messages;
-})

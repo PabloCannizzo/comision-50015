@@ -1,5 +1,7 @@
 Comando para la Consola...
 
+//"mongosh" (Ingresar a la consola y colocar el comando...).
+
 //" show dbs " (me lista la base de datos instaladas)
 
 //" use " (me sirve para posicionarme en la base de datos ya creada o bien si no existe crear una nueva con el nombre que le ingresemos-- la base de datos se termina de crear cuando tiene algun dato almacenado o cargado, sino no se creara.).
@@ -26,6 +28,6 @@ Comando para la Consola...
 
 // db.nombredelacoleccion.findOne({"especie":"perro"}) // con el elemento que cumpla con ese criterio, pero solo el primero.
 
-// "db.mascotas.find({"especie": "perro"}) " (Para mostrarme todos los elementos qye cumplan con el criterio).
+// "db.nombre.find({"especie": "perro"}) " (Para mostrarme todos los elementos qye cumplan con el criterio).
 
 

@@ -10,6 +10,7 @@ const multer = require("multer");
 const ProductManager = require("./dao/fs/product-manager.js");
 const productManager = new ProductManager("./src/models/productos.json");
 require("./database.js");
+const imagenRouter = require("./routes/imagen.router.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,21 +26,49 @@ app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./src/public/img");
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+})
+
+app.use(multer({ storage }).single("image"));
+
+app.use("/", imagenRouter);
+
 const httpServer = app.listen(PUERTO, () => {
     console.log(`Escuchando en http://localhost:${PUERTO}`);
 })
 
-const MessageModel = require("./dao/models/massage.model.js");
+const ProductModel = require("./dao/models/product.model.js");
+const CartModel = require("./dao/models/cart.model.js");
 const io = new socket.Server(httpServer);
 
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
     console.log("Nuevo usuario conectado");
+    //socket.emit("productos", await ProductModel.find());
+    socket.on("contenerdorProductos", async (data) => {
+        const productos = await ProductModel.find();
+        console.log(productos);
+        io.sockets.emit("productos", contenerProductos);
+    })
 
-    socket.on("message", async data => {
+    /* socket.on("message", async data => {
         await MessageModel.create(data);
         const messages = await MessageModel.find();
         console.log(messages);
         io.sockets.emit("message", messages);
-    })
-})
+    }) */
+    socket.on("eliminarProducto", async (id) => {
+        await productManager.deleteProduct(id);
+        io.sockets.emit("productos", await productManager.getProducts());
+    });
+    /* socket.on("products", async data =>{
+        await ProductModel();
+        io.sockets.emit("products");
+    }) */
+});

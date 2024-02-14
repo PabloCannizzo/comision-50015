@@ -1,3 +1,140 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+
+header {
+    background-color: #e6b400;
+    color: rgb(29, 29, 29);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header:hover{
+    margin: auto;
+    padding: auto;
+}
+
+.logo {
+    font-size: 2rem;
+    text-decoration: none;
+    color: rgb(5, 4, 4);
+    border-radius: 2px;
+    padding: 2px 2px;
+}
+
+.logo:hover {
+    background-color: #00bce6;
+    color: black;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: 1.5s;
+    padding: auto;
+}
+
+nav ul {
+    list-style: none;
+}
+
+
+/* Upload */
+
+.upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.uploadContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+.upload input {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+}
+
+.btnCarts {
+    background-color: #e60023;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 4px 4px;
+    border-radius: 10px;
+}
+
+.btnCarts:hover {
+    background-color: #00bce6;
+    color: black;
+    margin: auto;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    transition: 1.5s;
+    padding: auto;
+}
+
+/*Cards*/
+
+.card {
+    display: inline-block;
+    width: 300px;
+    margin: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card h3 {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.card p {
+    font-size: 0.7;
+    margin: 10px;
+    color: #777;
+}
+
+/*Button*/
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #c4001a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    color: #e60023;
+}
+
 h1 {
     color:red; 
     text-align: center;

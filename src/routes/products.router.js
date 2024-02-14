@@ -3,19 +3,27 @@ const router = express.Router();
 const ProductManager = require("../dao/db/product-manager-db.js");
 const productManager = new ProductManager();
 
+
 router.get("/", async (req, res) => {
     try {
-        const arrayProductos = await productManager.getProducts();
-        const limit = parseInt(req.query.limit);
-        if (limit) {
-            const arrayConLimite = arrayProductos.slice(0, limit);
-            return res.json(arrayConLimite);
-        } else {
-            return res.json(arrayProductos);
-        }
+        const limit = req.query.limit || 1;
+        const page = req.query.page || 2;
+        const product = await productManager.getProducts(limit, page);
+        console.log(product);
+        res.render("index", {prod: product,
+        hasPrevPage: product.hasPrevPage,
+        hasNextPage: product.hasNextPage,
+        prevPage: product.prevPage,
+        nextPage: product.nextPage,
+        currentPage: product.page,
+        totalPages: product.totalPages,
+        limit: product.limit
+    })
     } catch (error) {
-        console.log(error);
-        return res.json("Error al procesar la solicitud");
+        console.log("Error al cargar el producto", error);
+        res.status(500).json({
+            error:"Error en el servidor"
+        });
     }
 })
 
@@ -75,4 +83,4 @@ router.delete("/:pid", async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router; 

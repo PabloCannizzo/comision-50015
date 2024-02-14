@@ -1,0 +1,25 @@
+<h2>Mis Productos</h2>
+<div class="contenedorCards">
+    {{#each prod.docs}}
+    <div class="card">
+        <p>{{this.title}}</p>
+        <p>{{this.description}}</p>
+        <p>{{this.price}}</p>
+        <p>{{this.stock}}</p>
+        <button> Agregar Producto </button>
+    </div>
+    {{/each}}
+</div>
+{{#if hasNextPage}}
+<a href="/api/products?limit={{limit}}&page={{nextPage}}"> Siguiente </a>
+{{/if}}
+{{#if hasPrevPage}}
+<a href="/api/products?limit={{limit}}&page={{prevPage}}"> Anterior </a>
+{{/if}}
+
+<p>Pagina {{currentPage}} de {{totalPages}} </p>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<script src="js/index.js"></script>

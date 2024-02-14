@@ -36,9 +36,9 @@ class ProductManager {
         }
     }
 
-    async getProducts() {
+    async getProducts(limit, page) {
         try {
-            const productos = await ProductModel.find();
+            const productos = await ProductModel.paginate({},{limit,page});
             return productos;
         } catch (error) {
             console.log("Error al obtener los productos", error);
