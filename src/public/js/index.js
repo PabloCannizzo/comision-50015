@@ -1,11 +1,11 @@
 const socket = io();
 console.log("Bienvenido Usuario");
 
-socket.on("productos", (data) => {
-    renderProductos(data);
+socket.on("productos", () => {
+    renderProductos();
 });
 
-const renderProductos = (productos) => {
+/* const renderProductos = (productos) => {
     const contenedorProductos = document.getElementById("contenedorProductos");
     contenedorProductos.innerHTML = "";
     productos.forEach(item => {
@@ -37,4 +37,4 @@ const agregarProducto = () => {
 socket.on("productos", (data) => {
     renderProductos(data);
 });
-
+ */

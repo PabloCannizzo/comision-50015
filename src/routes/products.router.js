@@ -6,23 +6,30 @@ const productManager = new ProductManager();
 
 router.get("/", async (req, res) => {
     try {
-        const limit = req.query.limit || 1;
-        const page = req.query.page || 2;
-        const product = await productManager.getProducts(limit, page);
-        console.log(product);
-        res.render("index", {prod: product,
-        hasPrevPage: product.hasPrevPage,
-        hasNextPage: product.hasNextPage,
-        prevPage: product.prevPage,
-        nextPage: product.nextPage,
-        currentPage: product.page,
-        totalPages: product.totalPages,
-        limit: product.limit
-    })
+        const { limit = 10, page = 1, sort, query } = req.query;
+
+        const productos = await productManager.getProducts({
+            limit: parseInt(limit),
+            page: parseInt(page),
+            sort,
+            query,
+        });
+        res.json({
+            status: 'success',
+            payload: productos,
+            totalPages: productos.totalPages,
+            prevPage: productos.prevPage,
+            nextPage: productos.nextPage,
+            page: productos.page,
+            hasPrevPage: productos.hasPrevPage,
+            hasNextPage: productos.hasNextPage,
+            prevLink: productos.hasPrevPage ? `/api/products?limit=${limit}&page=${productos.prevPage}&sort=${sort}&query=${query}` : null,
+            nextLink: productos.hasNextPage ? `/api/products?limit=${limit}&page=${productos.nextPage}&sort=${sort}&query=${query}` : null,
+        });
     } catch (error) {
         console.log("Error al cargar el producto", error);
         res.status(500).json({
-            error:"Error en el servidor"
+            error: "Error en el servidor"
         });
     }
 })
@@ -70,11 +77,11 @@ router.put("/:pid", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
     const productId = req.params.pid;
     try {
-        if(productId){
+        if (productId) {
             await productManager.deleteProduct(productId);
             res.json({ status: "success", message: "Producto eliminado con éxito" });
             const products = await productManager.getProducts();
-        res.send(products);
+            res.send(products);
         }
         return console.log("Producto eliminado con éxito");
     } catch (error) {

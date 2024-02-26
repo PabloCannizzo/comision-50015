@@ -39,6 +39,8 @@ app.use(multer({ storage }).single("image"));
 
 app.use("/", imagenRouter);
 
+
+
 const httpServer = app.listen(PUERTO, () => {
     console.log(`Escuchando en http://localhost:${PUERTO}`);
 })
@@ -49,7 +51,7 @@ const io = new socket.Server(httpServer);
 
 
 io.on("connection", async (socket) => {
-    console.log("Nuevo usuario conectado");
+    console.log("Nuevo usuario conectado"); 
     //socket.emit("productos", await ProductModel.find());
     socket.on("contenerdorProductos", async (data) => {
         const productos = await ProductModel.find();
@@ -57,18 +59,12 @@ io.on("connection", async (socket) => {
         io.sockets.emit("productos", contenerProductos);
     })
 
-    /* socket.on("message", async data => {
-        await MessageModel.create(data);
-        const messages = await MessageModel.find();
-        console.log(messages);
-        io.sockets.emit("message", messages);
-    }) */
     socket.on("eliminarProducto", async (id) => {
         await productManager.deleteProduct(id);
         io.sockets.emit("productos", await productManager.getProducts());
     });
-    /* socket.on("products", async data =>{
+    socket.on("products", async data =>{
         await ProductModel();
         io.sockets.emit("products");
-    }) */
+    })
 });
