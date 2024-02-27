@@ -25,7 +25,8 @@ router.get("/products", async (req, res) => {
             prevPage: productos.prevPage,
             nextPage: productos.nextPage,
             currentPage: productos.page,
-            totalPages: productos.totalPages
+            totalPages: productos.totalPages,
+            user: req.session.user
         });
 
     } catch (error) {
