@@ -11,3 +11,60 @@ const upload = multer({storage}); // dest: "./src/public/img"  (Primer forma. Se
 app.post("/upload", upload.single("imagen"), (req, res) => {
     res.send("Archivo cargado con exito!");
 })
+
+
+//////////////////////////// codigo de app ////////////////////////////
+
+/* 
+app.get("/crearcuki", (req, res) => {
+    res.cookie("cookie", "Esto es una nueva cookie").send("COOKIE CREADA");
+})
+
+app.get("borrarcuki", (req, res) => {
+    res.clearCookie("cuki").send("COOKIE ELIMINADA");
+})
+
+app.get("/login", (req, res) => {
+    let users = req.query.usuario;
+
+    req.session.users = users;
+    res.send("Guardamos el usuario por medio de query");
+})
+
+app.get("/users", (req, res) => {
+    if(req.session.users) {
+        return res.send(`El usuario registrado es el siguiente: ${req.session.users}`);
+    }
+    res.send("No se encontro el usuario registrado");
+}) */
+
+///////////////////////////// codigo de app ///////////////////////////
+
+const httpServer = app.listen(PUERTO, () => {
+    console.log(`Escuchando en http://localhost:${PUERTO}`);
+})
+
+const ProductModel = require("./dao/models/product.model.js");
+const CartModel = require("./dao/models/cart.model.js");
+
+const io = new socket.Server(httpServer);
+
+
+io.on("connection", async (socket) => {
+    console.log("Nuevo usuario conectado"); 
+    //socket.emit("productos", await ProductModel.find());
+    socket.on("contenerdorProductos", async (data) => {
+        const productos = await ProductModel.find();
+        console.log(productos);
+        io.sockets.emit("productos", contenerProductos);
+    })
+
+    socket.on("eliminarProducto", async (id) => {
+        await productManager.deleteProduct(id);
+        io.sockets.emit("productos", await productManager.getProducts());
+    });
+    socket.on("products", async data =>{
+        await ProductModel();
+        io.sockets.emit("products");
+    })
+}); 
