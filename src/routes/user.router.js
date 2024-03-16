@@ -7,10 +7,10 @@ const passport = require("passport");
 
 /////////////// VERSION NUEVA //////////////////
 //Post para generar un usuario y almacenarlo en MongoDB
-/* 
+
 router.post("/", async (req, res) => {
 
-    const { first_name, last_name, email, password, age } = req.body;
+    const { username, first_name, last_name, email, password, age, role = "user" } = req.body;
 
     try {
         const existingUser = await UserModel.findOne({ email: email});
@@ -20,10 +20,10 @@ router.post("/", async (req, res) => {
         }
 
     // crear un nuevo usuario
-        const newUser = await UserModel.create({ first_name, last_name, email, password:createHash(password), age });
+        const newUser = await UserModel.create({ username, first_name, last_name, email, password:createHash(password), age });
 
         req.session.login = true;
-        // req.session.user = {
+        req.session.user = {
             email: newUser.email,
             age: newUser.age
         }; 
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
         res.status(400).send({ error: "Error al crear el usuario" });
     }
 })
- */
+
 
 //////////////// VERSION VIEJA ////////////////////
 
@@ -86,6 +86,5 @@ router.post("/", passport.authenticate("register", {
 router.get("/failedregister", (req, res) => {
     res.send({error: "Registro Fallido" });
 })
-
 
 module.exports = router; 
