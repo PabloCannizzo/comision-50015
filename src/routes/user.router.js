@@ -7,7 +7,7 @@ const passport = require("passport");
 
 /////////////// VERSION NUEVA //////////////////
 //Post para generar un usuario y almacenarlo en MongoDB
-
+/* 
 router.post("/", async (req, res) => {
 
     const { username, first_name, last_name, email, password, age, role = "user" } = req.body;
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
         console.log("Error al crear el usuario:", error);
         res.status(400).send({ error: "Error al crear el usuario" });
     }
-})
+}) */
 
 
 //////////////// VERSION VIEJA ////////////////////
@@ -86,5 +86,31 @@ router.post("/", passport.authenticate("register", {
 router.get("/failedregister", (req, res) => {
     res.send({error: "Registro Fallido" });
 })
+
+
+///////////////// Registro con JSON web Token ///////////////
+
+/* router.post("/", async (req, res) => {
+    const { first_name, last_name, email, password, age } = req.body;
+    try {
+        const existeUsuario = await UserModel.findOne({ email: email });
+        if (existeUsuario) {
+            return res.status(400).send({ error: "El email ya se encuentra registrado" });
+        }
+        // creamos un nuevo usuario
+
+        const nuevoUsuario = await UserModel.create({ first_name, last_name, email, password: createHash(password), age });
+
+        //Generamos un token:
+
+        const token = generateToken({ id: nuevoUsuario._id });
+
+        res.status(200).send({ status: "succes", message: "usuario creado con exito", token });
+
+    } catch (error) {
+        console.log("error en la autenticaccion", error);
+        res.status(400).send({ status: "error", message: "error interno del servidor" });
+    }
+}) */
 
 module.exports = router; 

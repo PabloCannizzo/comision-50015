@@ -1,13 +1,13 @@
 <h1>Mis Productos</h1>
-<div class="profile"></div>
+<div class="menu"></div>
 <div>
     {{#each Productos}}
     <div class="card">
-        <h2>{{title}}</h2>
-        <p>{{description}}</p>
-        <h3>{{price}}</h3>
-        <p>{{stock}}</p>
-        <button> Agregar Producto </button>
+        <h2>{{this.title}}</h2>
+        <p>{{this.description}}</p>
+        <h3>{{this.price}}</h3>
+        <p>{{this.stock}}</p>
+        <button href="/api/carts"> Agregar Producto </button>
     </div>
     {{/each}}
 </div>
