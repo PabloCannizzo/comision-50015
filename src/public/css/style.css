@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -13,11 +14,41 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    nav{
+        ul{
+            padding: 0rem 1rem;
+        }
+    }
 }
 
-header:hover{
+header:hover {
     margin: auto;
     padding: auto;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+
+    li {
+        a {
+            text-decoration: none;
+            list-style: none;
+            color: black;
+        }
+    }
+}
+
+a:hover {
+    transition: 0.1s;
+    text-decoration: underline;
+    background: #777;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: auto;
 }
 
 .logo {
@@ -136,7 +167,7 @@ nav ul {
 }
 
 h1 {
-    color:red; 
+    color: red;
     text-align: center;
 }
 
@@ -153,4 +184,10 @@ h1 {
     margin: 10px;
     padding: 10px;
     min-width: 200px;
+}
+
+.footer{
+    text-align: center;
+    background-color: rgba(128, 128, 128, 0.704);
+    padding: 0.5px;
 }

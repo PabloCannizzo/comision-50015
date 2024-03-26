@@ -34,6 +34,7 @@ router.get("/", async (req, res) => {
     }
 })
 
+
 router.post("/", async (req, res) => {
     const { title, description, price, img, code, stock, category } = req.body;
     try {
