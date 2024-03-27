@@ -1,4 +1,4 @@
-const socket = io();
+/* const socket = io();
 console.log("Bienvenido Usuario");
 
 socket.on("productos", () => {
@@ -37,4 +37,4 @@ const agregarProducto = () => {
 socket.on("productos", (data) => {
     renderProductos(data);
 });
-
+ */

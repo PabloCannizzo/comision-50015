@@ -35,11 +35,13 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     thumbnails: {
-        type: [String]
-    }
+        type: [String],
+    },
 })
 
 productSchema.plugin(mongoosePaginate);
-const ProductModel = mongoose.model("products", productSchema);
+const ProductModel = mongoose.model("Product", productSchema);
 
 module.exports = ProductModel;
+
+//"products"

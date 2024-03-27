@@ -2,7 +2,6 @@ const express = require("express");
 const PUERTO = 8080;
 const app = express();
 const productsRouter = require("./routes/products.router.js");
-const socket = require("socket.io");
 const viewsRouter = require("./routes/views.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const exphbs = require("express-handlebars");
@@ -20,7 +19,7 @@ const initializePassport = require("./config/passport.config.js");
 ////////////////////////////////
 require("./database.js");
 
-
+//const socket = require("socket.io");
 //const imagenRouter = require("./routes/imagen.router.js");
 
 //const FileStore = require("session-file-store");

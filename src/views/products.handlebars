@@ -1,16 +1,16 @@
 <h1>Mis Productos</h1>
 <div class="menu"></div>
-<div>
-    {{#each productos}}
-    <div class="card">
-        <h2>{{title}}</h2>
-        <p>{{description}}</p>
-        <h3>$ {{price}}</h3>
-        <p>Stock: {{stock}}</p>
-        <button href="/api/carts"> Agregar Producto </button>
-    </div>
-    {{/each}}
+
+{{#each productos}}
+<div class="card">
+    <h2>{{title}}</h2>
+    <p>{{description}}</p>
+    <h3>Price: $ {{price}}</h3>
+    <p>Stock: {{stock}}</p>
+    <button href="/api/carts"> Agregar Producto </button>
 </div>
+{{/each}}
+
 
 {{#if hasNextPage}}
 <a href="/products?page={{nextPage}}"> Siguiente </a>
