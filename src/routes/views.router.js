@@ -1,6 +1,8 @@
 const express = require("express");
+const ViewController = require("../controllers/views.controller");
+const viewController = new ViewController();
 const router = express.Router();
-const ProductManager = require("../dao/db/product-manager-db.js");
+/* const ProductManager = require("../dao/db/product-manager-db.js");
 const CartManager = require("../dao/db/cart-manager-db.js");
 const productManager = new ProductManager();
 const cartManager = new CartManager();
@@ -101,6 +103,14 @@ router.get("/profile", (req, res) => {
 
     //res.render("/profile");
 });
+ */
+
+
+router.get("/products", viewController.getProducts);
+router.get("/carts/:cid", viewController.getCarts);
+router.get("/login", viewController.login);
+router.get("/register", viewController.register);
+router.get("/profile", viewController.profile);
 
 
 module.exports = router; 

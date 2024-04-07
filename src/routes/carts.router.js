@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const CartManager = require("../dao/db/cart-manager-db.js");
+const CartsController = require("../controllers/carts.controller.js");
+const cartsController = new CartsController();
+
+/* const CartManager = require("../dao/db/cart-manager-db.js");
 const cartManager = new CartManager("./src/models/carrito.json");
 const CartModel = require("../dao/models/cart.model.js");
 
@@ -125,6 +128,16 @@ router.delete('/:cid', async (req, res) => {
             error: 'Error interno del servidor',
         });
     }
-});
+}); */
+
+router.post("/", cartsController.createCarts);
+router.get("/:cid", cartsController.getCarts);
+router.post("/:cid/product/:pid", cartsController.addProductsInCarts);
+router.delete("/:cid/product/:pid", cartsController.deleteProductsCarts);
+router.put("/:cid", cartsController.updateCarts);
+router.put("/:cid/product/:pid", cartsController.updateProductsCarts);
+router.delete("/:cid", cartsController.deleteCarts);
+
+
 
 module.exports = router;

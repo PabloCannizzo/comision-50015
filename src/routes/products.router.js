@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../dao/db/product-manager-db.js");
+const ProductController = require("../controllers/product.controller.js");
+const productController = new ProductController();
+
+/* const ProductManager = require("../dao/db/product-manager-db.js");
 const productManager = new ProductManager();
 
 
@@ -89,6 +92,14 @@ router.delete("/:pid", async (req, res) => {
         console.error("Error al eliminar el producto", error);
         res.status(404).json({ status: "error", message: "Error al eliminar el producto" });
     }
-});
+}); */
+
+router.get("/", productController.getProducts);
+router.post("/", productController.postProducts);
+router.get("/:pid", productController.getProductsById);
+router.put("/:pid", productController.updateProducts);
+router.delete("/:pid", productController.deleteProducts);
 
 module.exports = router; 
+
+// NOTA: CAMBIAR UBICACION DE RUTAS A CONTROLLER, GUIANDOME DE LOS REPOSITORIOS DEL PROFESOR, CLASE N°27. ASU VEZ APLICAR CON METODO JWT
