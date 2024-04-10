@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
 
     last_name: {
         type: String,
-        //required: true
+        required: true
     },
 
     email: {
@@ -26,8 +26,19 @@ const userSchema = mongoose.Schema({
 
     age: {
         type: Number,
-        //required: true
+        required: true
     },
+
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cart'
+    },
+
+    role: {
+        type: String,
+        enum: ["admin", "user"], //Roles Permitidos
+        default: "user" // asigna por defecto el rol de "user"
+    }
 });
 
 const UserModel = mongoose.model("user", userSchema);

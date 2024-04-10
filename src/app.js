@@ -1,18 +1,19 @@
 const express = require("express");
 const PUERTO = 8080;
 const app = express();
+
 const productsRouter = require("./routes/products.router.js");
 const viewsRouter = require("./routes/views.router.js");
 const cartsRouter = require("./routes/carts.router.js");
+const userRouter = require("./routes/user.router.js");
+
 const exphbs = require("express-handlebars");
 const multer = require("multer");
-const ProductManager = require("./dao/fs/product-manager.js");
-const productManager = new ProductManager("./src/models/productos.json");
 const cookieParser = require("cookie-parser");
-const userRouter = require("./routes/user.router.js");
-const sessionRouter = require("./routes/session.router.js");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const cors = require("cors");
+const path = require("path");
+
+
 //Passport:
 const passport = require("passport");
 const initializePassport = require("./config/passport.config.js");
@@ -28,28 +29,22 @@ require("./database.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./src/public"));
-app.use(cookieParser());
-app.use(session({
-    secret: "secretCoder",
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({
-        mongoUrl:"mongodb+srv://PabloCannizzo:mpc1451<@cluster0.v9gw0ln.mongodb.net/ecommerce?retryWrites=true&w=majority", ttl: 100
-    })
-}));
-//////////// cambios Passport
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
 
+
+initializePassport();
+app.use(cookieParser());
+app.use(passport.initialize());
+
+const authMiddleware = require("./middleware/authmiddleware.js");
+app.use(authMiddleware);
 
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 app.use("/api/users", userRouter);
-app.use("/api/sessions", sessionRouter);
 
 //app.use("/static", express.static(path.join(__dirname, "..", "public")));
 
@@ -72,8 +67,10 @@ app.use(multer({ storage }).single("image"));
 
 //app.use("/", imagenRouter);
 
-
-
-app.listen(PUERTO, () => {
-    console.log(`Escuchando en http://localhost:${PUERTO}`);
+const httpServer = app.listen(PUERTO, () => {
+    console.log(`Servidor escuchando en el puerto ${PUERTO}`);
 });
+
+///Websockets: rs
+const SocketManager = require("./sockets/socketmanager.js");
+new SocketManager(httpServer);

@@ -1,11 +1,19 @@
 <div class="profile">
     <h1>Perfil de Usuario</h1>
-
-    <h2>Bienvenido: {{user.first_name}} {{user.last_name}}</h2>
-    <h2>Email: {{user.email}}</h2>
-    <h2>Edad: {{user.age}}</h2>
+    <h2>Bienvenido: {{user.nombre}} {{user.last_name}}</h2>
+    <h2> Role: {{user.role}} </h2>
     <div>
-        <a href="/api/sessions/logout">Desloguear</a>
-        <a href="/products">Volver al Inicio</a>
+        <form action="/api/users/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+        <button><a href="/products">Volver al Inicio</a></button>
     </div>
+
+
+    {{#if this.isAdmin}}
+    <a href="/realtimeproducts"> Modificar Productos </a>
+    {{else}}
+    <a href="/chat"> Chat en vivo</a>
+    <a href="/products"> Tienda </a>
+    {{/if}}
 </div>

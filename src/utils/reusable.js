@@ -1,5 +1,5 @@
-const respuesta = (res, status, message) => {
+const Answer = (res, status, message) => {
     res.status(status).json({message});
 }
 
-module.exports = respuesta; 
+module.exports = Answer; 

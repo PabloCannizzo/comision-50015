@@ -1,55 +1,35 @@
-const ProductModel = require("../dao/models/product.model.js");
+const ProductRepository = require("../repositories/product.repository.js");
+const productRepository = new ProductRepository();
 const answer = require("../utils/reusable.js");
-const ProductManager = require("../dao/db/product-manager-db.js");
-const productManager = new ProductManager();
 
 class ProductController {
-    async getProducts(req, res) {
+    async addProduct(req, res) {
+        const newProducto = req.body;
         try {
-            const { limit = 10, page = 1, sort, query } = req.query;
+            const result = await productRepository.addProduct(newProducto);
+            res.json(result);
 
-            const productos = await productManager.getProducts({
-                limit: parseInt(limit),
-                page: parseInt(page),
-                sort,
-                query,
-            });
-            res.json({
-                status: 'success',
-                payload: productos,
-                totalPages: productos.totalPages,
-                prevPage: productos.prevPage,
-                nextPage: productos.nextPage,
-                page: productos.page,
-                hasPrevPage: productos.hasPrevPage,
-                hasNextPage: productos.hasNextPage,
-                prevLink: productos.hasPrevPage ? `/api/products?limit=${limit}&page=${productos.prevPage}&sort=${sort}&query=${query}` : null,
-                nextLink: productos.hasNextPage ? `/api/products?limit=${limit}&page=${productos.nextPage}&sort=${sort}&query=${query}` : null,
-            });
         } catch (error) {
-            console.log("Error al cargar el producto", error);
-            answer(res, 500, "Error en el servidor");
+            answer(res, 500, "Error" );
         }
     }
 
-    async postProducts(req, res) {
-        const { title, description, price, img, code, stock, category } = req.body;
+    async getProducts(req, res) {
         try {
-            await productManager.addProduct({ title, description, price, img, code, stock, category });
-            //res.json({ status: "success", message: "Producto agregado con éxito" });
-            answer(res, 201, "Producto agregado con exito");
+            let { limit = 10, page = 1, sort, query } = req.query;
 
+            const products = await productRepository.getProductos(limit, page, sort, query);
+
+            res.json(products);
         } catch (error) {
-            console.error("Producto no creado", error);
-            //res.status(404).json({ status: "error", message: "Error al crear el producto" });
-            answer(res, 500, "Error al crear el producto");
+            answer(res, 500, "Error" );
         }
     }
 
     async getProductsById(req, res) {
         let pid = req.params.pid;
         try {
-            const buscado = await productManager.getProductById(pid); // id
+            const buscado = await productRepository.getProductById(pid); // id
 
             if (buscado) {
                 //return res.json(buscado);
@@ -68,10 +48,10 @@ class ProductController {
         const productId = req.params.pid;
         const updatedProduct = req.body;
         try {
-            await productManager.updateProduct(productId, updatedProduct);
+            const result = await productRepository.updateProduct(productId, updatedProduct);
             //res.json({ status: "success", message: "Producto actualizado con éxito" });
             console.log("Producto actualizado con éxito");
-
+            res.json(result);
             answer(res, 201, "Producto actualizado con exito");
 
         } catch (error) {
@@ -85,12 +65,12 @@ class ProductController {
         const productId = req.params.pid;
         try {
             if (productId) {
-                await productManager.deleteProduct(productId);
+                await productRepository.deleteProduct(productId);
                 //res.json({ status: "success", message: "Producto eliminado con éxito" });
 
                 answer(res, 201, "Producto eliminado con éxito");
 
-                const products = await productManager.getProducts();
+                const products = await productRepository.getProducts();
                 //res.send(products);
 
                 answer(res, 201, products)

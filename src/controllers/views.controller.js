@@ -1,32 +1,42 @@
-const ProductManager = require("../dao/db/product-manager-db.js");
-const CartManager = require("../dao/db/cart-manager-db.js");
-const productManager = new ProductManager();
-const cartManager = new CartManager();
+const ProductModel = require("../dao/models/product.model.js");
+const CartRepository = require("../repositories/cart.repository.js");
+const cartRepository = new CartRepository();
 const answer = require("../utils/reusable.js");
 
 class ViewController {
-    async getProducts(req, res) {
+    async renderProducts(req, res) {
         try {
-            const { page = 1, limit = 2 } = req.query;
-            const productos = await productManager.getProducts({
-                page: parseInt(page),
-                limit: parseInt(limit)
+            const { page = 1, limit = 3 } = req.query;
+            const skip = (page - 1) * limit;
+            const products = await ProductModel
+                .find()
+                .skip(skip)
+                .limit(limit);
+
+            const totalProducts = await ProductModel.countDocuments();
+
+            const totalPages = Math.ceil(totalProducts / limit);
+
+            const hasPrevPage = page > 1;
+            const hasNextPage = page < totalPages;
+
+            const nuevoArray = products.map(product => {
+                const { _id, ...rest } = product.toObject();
+                return { id: _id, ...rest }; // Agregar el ID al objeto
             });
 
-            const nuevoArray = productos.docs.map(producto => {
-                const { _id, ...rest } = producto.toObject();
-                return rest;
-            });
+            const cartId = req.user.cart.toString();
+            console.log(cartId);
 
             res.render("products", {
                 productos: nuevoArray,
-                hasPrevPage: productos.hasPrevPage,
-                hasNextPage: productos.hasNextPage,
-                prevPage: productos.prevPage,
-                nextPage: productos.nextPage,
-                currentPage: productos.page,
-                totalPages: productos.totalPages,
-                //user: req.session.user
+                hasPrevPage,
+                hasNextPage,
+                prevPage: page > 1 ? parseInt(page) - 1 : null,
+                nextPage: page < totalPages ? parseInt(page) + 1 : null,
+                currentPage: parseInt(page),
+                totalPages,
+                cartId
             });
 
         } catch (error) {
@@ -39,16 +49,16 @@ class ViewController {
         }
     }
 
-    async getCarts(req, res) {
+    async renderCarts(req, res) {
         const cartId = req.params.cid;
 
         try {
-            const carrito = await cartManager.getCarritoById(cartId);
+            const carrito = await cartRepository.getCarritoById(cartId);
 
             if (!carrito) {
                 console.log("No existe ese carrito con el id");
                 //return res.status(404).json({ error: "Carrito no encontrado" });
-                return answer(res, 500, "Carrito no encontrado");
+                return answer(res, 404, "Carrito no encontrado");
             }
 
             const productosEnCarrito = carrito.products.map(item => ({
@@ -57,7 +67,7 @@ class ViewController {
             }));
 
 
-            res.render("carts", { productos: productosEnCarrito });
+            res.render("carts", { products: productosEnCarrito });
         } catch (error) {
             console.error("Error al obtener el carrito", error);
             //res.status(500).json({ error: "Error interno del servidor" });
@@ -66,41 +76,33 @@ class ViewController {
     }
 
     //Ruta para el formulario de login
-    async login(req, res) {
-        // Verifica si el usuario ya está logueado y redirige a la página de perfil si es así
-
-        /// COMENTADO 16/03/24 para implementar JWT
-        if (req.session.login) {
-            return res.redirect("/profile");
-        }
-
+    async renderlogin(req, res) {
         res.render("login");
+        //return res.redirect("/profile");
     }
 
     // Ruta para el formulario de registro
-    async register(req, res) {
-        // Verifica si el usuario ya está logueado y redirige a la página de perfil si es así
-
-        // COMENTADO 16/03/24
-        if (req.session.login) {
-            return res.redirect("/profile");
-        }
+    async renderRegister(req, res) {
+        //return res.redirect("/profile");
         res.render("register");
     }
 
-    // Ruta para la vista de perfil 
-    async profile(req, res) {
-        // Verifica si el usuario está logueado
-
-        /// COMENTADO 16/03/24
-        if (!req.session.login) {
-            // Redirige al formulario de login si no está logueado
-            return res.redirect("/login");
+    async renderRealTimeProducts(req, res) {
+        try {
+            res.render("realtimeproducts");
+        } catch (error) {
+            console.log("error en la vista real time", error);
+            //res.status(500).json({ error: "Error interno del servidor" });
+            answer(res, 500, "Error interno del servidor");
         }
-        // Renderiza la vista de perfil con los datos del usuario
-        res.render("profile", { user: req.session.user });
+    }
 
-        //res.render("/profile");
+    async renderChat(req, res) {
+        res.render("chat");
+    }
+
+    async renderHome(req, res) {
+        res.render("home");
     }
 }
 

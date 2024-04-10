@@ -3,10 +3,10 @@
 const configObject = require("./config/config.js");
 const {mongo_url} = configObject;
 
-mongoose.connect(mongo_url)
+mongoose.connect("mongodb+srv://PabloCannizzo:mpc1451<@cluster0.v9gw0ln.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log("Conexión a MongoDB exitosa!"))
-    .catch(() => console.log("Conexión fallida. Ocurrio un error!"));
- */
+    .catch(() => console.log("Conexión fallida. Ocurrio un error!")); */
+
 
 //mongodb+srv://PabloCannizzo:mpc1451<@cluster0.v9gw0ln.mongodb.net/ecommerce?retryWrites=true&w=majority
 //mongodb://localhost:27017/coderest
