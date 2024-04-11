@@ -1,16 +1,14 @@
 const socket = io();
 
-socket.on("products", (data) => {
+socket.on("productos", (data) => {
     //console.log(data);
-    renderProducts(data);
-})
+    renderProductos(data);
+}); 
 
-//Función para renderizar nuestros productos: 
-
-const renderProducts = (productos) => {
-    const containerProducts = document.getElementById("conteinerProducts");
-    containerProducts.innerHTML = "";
-
+const renderProductos = (productos) => {
+    const contenedorProductos = document.getElementById("contenedorProductos");
+    contenedorProductos.innerHTML = "";
+    
     productos.docs.forEach(item => {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -21,27 +19,25 @@ const renderProducts = (productos) => {
                         <button> Eliminar </button>
                         `;
 
-        containerProducts.appendChild(card);
+        contenedorProductos.appendChild(card);
         //Agregamos el evento al boton de eliminar: 
-        card.querySelector("button").addEventListener("click", () => {
-            deleteProduct(item._id);
+        card.querySelector("button").addEventListener("click", ()=> {
+            eliminarProducto(item._id);
         })
     })
 }
 
 
-const deleteProduct = (id) => {
-    socket.emit("deleteProduct", id);
+const eliminarProducto = (id) =>  {
+    socket.emit("eliminarProducto", id);
 }
 
-//Agregamos productos del formulario: 
-
 document.getElementById("btnEnviar").addEventListener("click", () => {
-    addProduct();
+    agregarProducto();
 })
 
 
-const addProduct = () => {
+const agregarProducto = () => {
     const producto = {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
@@ -53,5 +49,5 @@ const addProduct = () => {
         status: document.getElementById("status").value === "true",
     };
 
-    socket.emit("addProduct", producto);
+    socket.emit("agregarProducto", producto);
 }

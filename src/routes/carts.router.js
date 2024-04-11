@@ -1,18 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const CartsController = require("../controllers/carts.controller.js");
-const cartsController = new CartsController();
+const cartController = new CartsController();
 const authMiddleware = require("../middleware/authmiddleware.js");
 
-router.use(authMiddleware);
-router.post("/", cartsController.createCarts);
-router.get("/:cid", cartsController.getCarts);
-router.post("/:cid/product/:pid", cartsController.addProductsInCarts);
-router.delete("/:cid/product/:pid", cartsController.deleteProducts);
-router.put("/:cid", cartsController.updateCarts);
-router.put("/:cid/product/:pid", cartsController.updateProductsCarts);
-router.delete("/:cid", cartsController.deleteCarts);
-router.post("/:cid/purchase", cartsController.finalizePurchase);
+router.post("/", cartController.nuevoCarrito);
+router.get("/:cid", cartController.obtenerProductosDeCarrito);
+router.post("/:cid/product/:pid", cartController.agregarProductoEnCarrito);
+router.delete('/:cid/product/:pid', cartController.eliminarProductoDeCarrito);
+router.put('/:cid', cartController.actualizarProductosEnCarrito);
+router.put('/:cid/product/:pid', cartController.actualizarCantidad);
+router.delete('/:cid', cartController.vaciarCarrito);
+router.post('/:cid/purchase', cartController.finalizarCompra);
 
 
 

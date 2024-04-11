@@ -1,17 +1,17 @@
 const ProductModel = require("../dao/models/product.model.js");
 
 class ProductRepository {
-    async addProducto({ title, description, price, img, code, stock, category, thumbnails }) {
+    async agregarProducto({ title, description, price, img, code, stock, category, thumbnails }) {
         try {
             if (!title || !description || !price || !code || !stock || !category) {
                 console.log("Todos los campos son obligatorios");
                 return;
             }
 
-            const existsProduct = await ProductModel.findOne({ code: code });
+            const existeProducto = await ProductModel.findOne({ code: code });
 
-            if (existsProduct) {
-                console.log("El código debe ser único, malditooo!!!");
+            if (existeProducto) {
+                console.log("El codigo del producto ya existe");
                 return;
             }
 
@@ -36,7 +36,7 @@ class ProductRepository {
         }
     }
 
-    async getProducts(limit = 10, page = 1, sort, query) {
+    async obtenerProductos(limit = 10, page = 1, sort, query) {
         try {
             const skip = (page - 1) * limit;
 
@@ -53,7 +53,7 @@ class ProductRepository {
                 }
             }
 
-            const products = await ProductModel
+            const productos = await ProductModel
                 .find(queryOptions)
                 .sort(sortOptions)
                 .skip(skip)
@@ -68,7 +68,7 @@ class ProductRepository {
             
 
             return {
-                docs: products,
+                docs: productos,
                 totalPages,
                 prevPage: hasPrevPage ? page - 1 : null,
                 nextPage: hasNextPage ? page + 1 : null,
@@ -83,23 +83,23 @@ class ProductRepository {
         }
     }
 
-    async getProductById(id) {
+    async obtenerProductoPorId(id) {
         try {
-            const product = await ProductModel.findById(id);
+            const producto = await ProductModel.findById(id);
 
-            if (!product) {
+            if (!producto) {
                 console.log("Producto no encontrado");
                 return null;
             }
 
-            console.log("Producto encontrado!");
-            return product;
+            console.log("Producto encontrado");
+            return producto;
         } catch (error) {
             throw new Error("Error");
         }
     }
 
-    async updateProduct(id, productoActualizado) {
+    async actualizarProducto(id, productoActualizado) {
         try {
             const actualizado = await ProductModel.findByIdAndUpdate(id, productoActualizado);
             if (!actualizado) {
@@ -107,19 +107,19 @@ class ProductRepository {
                 return null;
             }
 
-            console.log("Producto actualizado!");
+            console.log("Producto actualizado con exito");
             return actualizado;
         } catch (error) {
             throw new Error("Error");
         }
     }
 
-    async deleteProduct(id) {
+    async eliminarProducto(id) {
         try {
             const deleteado = await ProductModel.findByIdAndDelete(id);
 
             if (!deleteado) {
-                console.log("Producto no encontrado!");
+                console.log("No se encuentraaaa, busca bien!");
                 return null;
             }
 

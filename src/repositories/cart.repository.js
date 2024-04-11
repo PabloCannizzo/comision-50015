@@ -1,51 +1,49 @@
 const CartModel = require("../dao/models/cart.model.js");
 
 class CartRepository {
-    async createCart() {
+    async crearCarrito() {
         try {
-            const newCart = new CartModel({ products: [] });
-            await newCart.save();
-            return newCart;
+            const nuevoCarrito = new CartModel({ products: [] });
+            await nuevoCarrito.save();
+            return nuevoCarrito;
         } catch (error) {
             throw new Error("Error");
         }
     }
 
-    async getCarts(idCart) {
+    async obtenerProductosDeCarrito(idCarrito) {
         try {
-            const cart = await CartModel.findById(idCart);
-            if (!cart) {
+            const carrito = await CartModel.findById(idCarrito);
+            if (!carrito) {
                 console.log("No existe ese carrito con el id");
                 return null;
             }
-            return cart;
+            return carrito;
         } catch (error) {
             throw new Error("Error");
         }
     }
 
-    async addProductsInCarts(cartId, productId, quantity = 1) {
+    async agregarProducto(cartId, productId, quantity = 1) {
         try {
-            const cart = await this.getCarts(cartId);
-            const existsProduct = cart.products.find(item => item.product._id.toString() === productId);
+            const carrito = await this.obtenerProductosDeCarrito(cartId);
+            const existeProducto = carrito.products.find(item => item.product._id.toString() === productId);
 
-            if (existsProduct) {
-                existsProduct.quantity += quantity;
+            if (existeProducto) {
+                existeProducto.quantity += quantity;
             } else {
-                cart.products.push({ product: productId, quantity });
+                carrito.products.push({ product: productId, quantity });
             }
+            carrito.markModified("products");
 
-            //Vamos a marcar la propiedad "products" como modificada antes de guardar: 
-            cart.markModified("products");
-
-            await cart.save();
-            return cart;
+            await carrito.save();
+            return carrito;
         } catch (error) {
             throw new Error("Error");
         }
     }
 
-    async deleteProducts(cartId, productId) {
+    async eliminarProducto(cartId, productId) {
         try {
             const cart = await CartModel.findById(cartId);
             if (!cart) {
@@ -59,16 +57,13 @@ class CartRepository {
         }
     }
 
-    async updateCarts(cartId, updatedProducts) {
+    async actualizarProductosEnCarrito(cartId, updatedProducts) {
         try {
             const cart = await CartModel.findById(cartId);
-
             if (!cart) {
                 throw new Error('Carrito no encontrado');
             }
-
             cart.products = updatedProducts;
-
             cart.markModified('products');
             await cart.save();
             return cart;
@@ -77,30 +72,29 @@ class CartRepository {
         }
     }
 
-    async updateProductsCarts(cartId, productId, newQuantity) {
+    async actualizarCantidadesEnCarrito(cartId, productId, newQuantity) {
         try {
             const cart = await CartModel.findById(cartId);
             if (!cart) {
                 throw new Error('Carrito no encontrado');
             }
-
             const productIndex = cart.products.findIndex(item => item._id.toString() === productId);
 
             if (productIndex !== -1) {
                 cart.products[productIndex].quantity = newQuantity;
                 cart.markModified('products');
+
                 await cart.save();
                 return cart;
             } else {
                 throw new Error('Producto no encontrado en el carrito');
             }
-
         } catch (error) {
             throw new Error("Error al actualizar las cantidades");
         }
     }
 
-    async deleteCarts(cartId) {
+    async vaciarCarrito(cartId) {
         try {
             const cart = await CartModel.findByIdAndUpdate(
                 cartId,
@@ -111,7 +105,6 @@ class CartRepository {
             if (!cart) {
                 throw new Error('Carrito no encontrado');
             }
-
             return cart;
 
         } catch (error) {

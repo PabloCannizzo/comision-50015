@@ -6,9 +6,9 @@ const productController = new ProductController();
 
 router.get("/", productController.getProducts);
 router.post("/", productController.addProduct);
-router.get("/:pid", productController.getProductsById);
-router.put("/:pid", productController.updateProducts);
-router.delete("/:pid", productController.deleteProducts);
+router.get("/:pid", productController.getProductById);
+router.put("/:pid", productController.updateProduct);
+router.delete("/:pid", productController.deleteProduct);
 
 module.exports = router; 
 

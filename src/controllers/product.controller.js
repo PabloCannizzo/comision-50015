@@ -3,14 +3,15 @@ const productRepository = new ProductRepository();
 const answer = require("../utils/reusable.js");
 
 class ProductController {
+
     async addProduct(req, res) {
-        const newProducto = req.body;
+        const nuevoProducto = req.body;
         try {
-            const result = await productRepository.addProduct(newProducto);
-            res.json(result);
+            const resultado = await productRepository.agregarProducto(nuevoProducto);
+            res.json(resultado);
 
         } catch (error) {
-            answer(res, 500, "Error" );
+            res.status(500).send("Error");
         }
     }
 
@@ -18,71 +19,51 @@ class ProductController {
         try {
             let { limit = 10, page = 1, sort, query } = req.query;
 
-            const products = await productRepository.getProductos(limit, page, sort, query);
+            const productos = await productRepository.obtenerProductos(limit, page, sort, query);
 
-            res.json(products);
+            res.json(productos);
         } catch (error) {
-            answer(res, 500, "Error" );
+            res.status(500).send("Error");
         }
     }
 
-    async getProductsById(req, res) {
-        let pid = req.params.pid;
+    async getProductById(req, res) {
+        const id = req.params.pid;
         try {
-            const buscado = await productRepository.getProductById(pid); // id
-
-            if (buscado) {
-                //return res.json(buscado);
-                return answer(res, 201, buscado);
-            } else {
-                return res.json("ID de producto incorrecto");
+            const buscado = await productRepository.obtenerProductoPorId(id);
+            if (!buscado) {
+                return res.json({
+                    error: "Producto no encontrado"
+                });
             }
+            res.json(buscado);
         } catch (error) {
-            console.log(error);
-            //res.status(404).json({ status: "error", message: "Error al buscar el producto" });
-            answer(res, 500, "Error al buscar el producto");
+            res.status(500).send("Error");
         }
     }
 
-    async updateProducts(req, res) {
-        const productId = req.params.pid;
-        const updatedProduct = req.body;
+    async updateProduct(req, res) {
         try {
-            const result = await productRepository.updateProduct(productId, updatedProduct);
-            //res.json({ status: "success", message: "Producto actualizado con éxito" });
-            console.log("Producto actualizado con éxito");
-            res.json(result);
-            answer(res, 201, "Producto actualizado con exito");
+            const id = req.params.pid;
+            const productoActualizado = req.body;
 
+            const resultado = await productRepository.actualizarProducto(id, productoActualizado);
+            res.json(resultado);
         } catch (error) {
-            console.error("Error al actualizar el producto", error);
-            //res.status(404).json({ status: "error", message: "Error al actualizar el producto" });
-            answer(res, 500, "Error al actualizar el producto");
+            res.status(500).send("Error al actualizar el producto");
         }
     }
 
-    async deleteProducts(res, req) {
-        const productId = req.params.pid;
+    async deleteProduct(req, res) {
+        const id = req.params.pid;
         try {
-            if (productId) {
-                await productRepository.deleteProduct(productId);
-                //res.json({ status: "success", message: "Producto eliminado con éxito" });
+            let respuesta = await productRepository.eliminarProducto(id);
 
-                answer(res, 201, "Producto eliminado con éxito");
-
-                const products = await productRepository.getProducts();
-                //res.send(products);
-
-                answer(res, 201, products)
-            }
-            return console.log("Producto eliminado con éxito");
+            res.json(respuesta);
         } catch (error) {
-            console.error("Error al eliminar el producto", error);
-            //res.status(404).json({ status: "error", message: "Error al eliminar el producto" });
-
-            answer(res, 500, "Error al eliminar el producto");
+            res.status(500).send("Error al eliminar el producto");
         }
     }
 }
 
-module.exports = ProductController;
+module.exports = ProductController; 

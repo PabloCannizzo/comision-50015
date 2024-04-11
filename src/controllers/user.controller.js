@@ -11,9 +11,7 @@ class UserController {
             const existeUsuario = await UserModel.findOne({ email });
             if (existeUsuario) {
                 return res.status(400).send("El usuario ya existe");
-            }
-
-            //Creo un nuevo carrito: 
+            } 
             const nuevoCarrito = new CartModel();
             await nuevoCarrito.save();
 

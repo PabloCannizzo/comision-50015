@@ -3,12 +3,14 @@ const CartRepository = require("../repositories/cart.repository.js");
 const cartRepository = new CartRepository();
 const answer = require("../utils/reusable.js");
 
-class ViewController {
+class ViewsController {
     async renderProducts(req, res) {
         try {
             const { page = 1, limit = 3 } = req.query;
+
             const skip = (page - 1) * limit;
-            const products = await ProductModel
+
+            const productos = await ProductModel
                 .find()
                 .skip(skip)
                 .limit(limit);
@@ -20,13 +22,13 @@ class ViewController {
             const hasPrevPage = page > 1;
             const hasNextPage = page < totalPages;
 
-            const nuevoArray = products.map(product => {
-                const { _id, ...rest } = product.toObject();
+            const nuevoArray = productos.map(producto => {
+                const { _id, ...rest } = producto.toObject();
                 return { id: _id, ...rest }; // Agregar el ID al objeto
             });
 
+
             const cartId = req.user.cart.toString();
-            console.log(cartId);
 
             res.render("products", {
                 productos: nuevoArray,
@@ -41,49 +43,53 @@ class ViewController {
 
         } catch (error) {
             console.error("Error al obtener productos", error);
-            /* res.status(500).json({
+            res.status(500).json({
                 status: 'error',
                 error: "Error interno del servidor"
-            }); */
-            answer(res, 500, "Error interno del servidor");
+            });
         }
     }
 
-    async renderCarts(req, res) {
+    async renderCart(req, res) {
         const cartId = req.params.cid;
-
         try {
-            const carrito = await cartRepository.getCarritoById(cartId);
+            const carrito = await cartRepository.obtenerProductosDeCarrito(cartId);
 
             if (!carrito) {
                 console.log("No existe ese carrito con el id");
-                //return res.status(404).json({ error: "Carrito no encontrado" });
-                return answer(res, 404, "Carrito no encontrado");
+                return res.status(404).json({ error: "Carrito no encontrado" });
             }
 
-            const productosEnCarrito = carrito.products.map(item => ({
-                product: item.product.toObject(),
-                quantity: item.quantity
-            }));
+
+            let totalCompra = 0;
+
+            const productosEnCarrito = carrito.products.map(item => {
+                const product = item.product.toObject();
+                const quantity = item.quantity;
+                const totalPrice = product.price * quantity;
 
 
-            res.render("carts", { products: productosEnCarrito });
+                totalCompra += totalPrice;
+
+                return {
+                    product: { ...product, totalPrice },
+                    quantity,
+                    cartId
+                };
+            });
+
+            res.render("carts", { productos: productosEnCarrito, totalCompra, cartId });
         } catch (error) {
             console.error("Error al obtener el carrito", error);
-            //res.status(500).json({ error: "Error interno del servidor" });
-            answer(res, 500, "Error interno del servidor");
+            res.status(500).json({ error: "Error interno del servidor" });
         }
     }
 
-    //Ruta para el formulario de login
-    async renderlogin(req, res) {
+    async renderLogin(req, res) {
         res.render("login");
-        //return res.redirect("/profile");
     }
 
-    // Ruta para el formulario de registro
     async renderRegister(req, res) {
-        //return res.redirect("/profile");
         res.render("register");
     }
 
@@ -92,8 +98,7 @@ class ViewController {
             res.render("realtimeproducts");
         } catch (error) {
             console.log("error en la vista real time", error);
-            //res.status(500).json({ error: "Error interno del servidor" });
-            answer(res, 500, "Error interno del servidor");
+            res.status(500).json({ error: "Error interno del servidor" });
         }
     }
 
@@ -106,4 +111,4 @@ class ViewController {
     }
 }
 
-module.exports = ViewController;
+module.exports = ViewsController;

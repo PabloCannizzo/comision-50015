@@ -13,15 +13,15 @@ class SocketManager {
         this.io.on("connection", async (socket) => {
             console.log("Un cliente se conectó");
             
-            socket.emit("products", await productRepository.getProducts() );
+            socket.emit("productos", await productRepository.obtenerProductos() );
 
-            socket.on("deleteProduct", async (id) => {
-                await productRepository.deleteProduct(id);
+            socket.on("eliminarProducto", async (id) => {
+                await productRepository.eliminarProducto(id);
                 this.emitUpdatedProducts(socket);
             });
 
-            socket.on("addProduct", async (product) => {
-                await productRepository.addProducto(product);
+            socket.on("agregarProducto", async (producto) => {
+                await productRepository.agregarProducto(producto);
                 this.emitUpdatedProducts(socket);
             });
 
@@ -34,7 +34,7 @@ class SocketManager {
     }
 
     async emitUpdatedProducts(socket) {
-        socket.emit("productos", await productRepository.getProducts());
+        socket.emit("productos", await productRepository.obtenerProductos());
     }
 }
 
