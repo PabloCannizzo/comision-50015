@@ -12,7 +12,7 @@ router.get("/login", viewsController.renderLogin);
 router.get("/register", viewsController.renderRegister);
 router.get("/realtimeproducts", checkUserRole(['admin']), viewsController.renderRealTimeProducts);
 router.get("/chat", checkUserRole(['usuario']) ,viewsController.renderChat);
-router.get("/", viewsController.renderHome);
+router.get("/home", viewsController.renderHome);
 
 
 

@@ -7,6 +7,11 @@ const viewsRouter = require("./routes/views.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const userRouter = require("./routes/user.router.js");
 
+const contactRouter = require("./routes/contact.router.js");
+const mailRouter = require("./routes/mail.router.js");
+const usermocksRouter = require("./routes/usermocks.router.js");
+const manejadorError = require("./middleware/error.js");
+
 const exphbs = require("express-handlebars");
 const multer = require("multer");
 const cookieParser = require("cookie-parser");
@@ -46,13 +51,17 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 app.use("/api/users", userRouter);
 
+app.use("/contact", contactRouter);
+app.use("/mail", mailRouter);
+app.use("/mockingproducts", usermocksRouter);
+
 //app.use("/static", express.static(path.join(__dirname, "..", "public")));
 
 app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
-
+app.use(manejadorError);
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

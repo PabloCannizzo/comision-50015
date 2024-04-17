@@ -3,14 +3,22 @@ const CartModel = require("../dao/models/cart.model.js");
 const jwt = require("jsonwebtoken");
 const { createHash, isValidPassword } = require("../utils/hashBcrypt.js");
 const UserDTO = require("../dto/user.dto.js");
+const CustomError = require("../service/errors/custom-errors.js");
+const { generarInfoError } = require("../service/errors/info.js");
+const { EErrors } = require("../service/errors/enums.js");
 
 class UserController {
     async register(req, res) {
         const { first_name, last_name, email, password, age } = req.body;
         try {
-            const existeUsuario = await UserModel.findOne({ email });
+            const existeUsuario = await UserModel.findOne({ first_name, last_name, email });
             if (existeUsuario) {
-                return res.status(400).send("El usuario ya existe");
+                throw CustomError.crearError({
+                    nombre: "Usuario nuevo",
+                    causa: generarInfoError({ first_name, last_name, email }),
+                    mensaje: "Error al intentar crear un usuario",
+                    codigo: EErrors.TIPO_INVALIDO
+                });
             } 
             const nuevoCarrito = new CartModel();
             await nuevoCarrito.save();
