@@ -61,7 +61,7 @@ app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
-app.use(manejadorError);
+app.use(manejadorError);//
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
