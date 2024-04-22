@@ -11,6 +11,7 @@ const contactRouter = require("./routes/contact.router.js");
 const mailRouter = require("./routes/mail.router.js");
 const usermocksRouter = require("./routes/usermocks.router.js");
 const manejadorError = require("./middleware/error.js");
+const compression = require("express-compression");
 
 const exphbs = require("express-handlebars");
 const multer = require("multer");
@@ -60,6 +61,9 @@ app.use("/mockingproducts", usermocksRouter);
 app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
+app.use(compression({
+    brotli:{enabled:true, zlib:{}}
+}));
 
 app.use(manejadorError);//
 

@@ -6,20 +6,21 @@ const UserDTO = require("../dto/user.dto.js");
 const CustomError = require("../service/errors/custom-errors.js");
 const { generarInfoError } = require("../service/errors/info.js");
 const { EErrors } = require("../service/errors/enums.js");
+const answer = require("../utils/reusable.js");
 
 class UserController {
     async register(req, res) {
-        const { first_name, last_name, email, password, age } = req.body;
+        const { first_name, last_name, email, password, age, role } = req.body;
         try {
-            const existeUsuario = await UserModel.findOne({ first_name, last_name, email });
-            if (existeUsuario) {
+            const existeUsuario = await UserModel.find({ first_name, last_name, email });
+            if (!existeUsuario) {
                 throw CustomError.crearError({
                     nombre: "Usuario nuevo",
                     causa: generarInfoError({ first_name, last_name, email }),
-                    mensaje: "Error al intentar crear un usuario",
+                    mensaje: "Error al intentar crear un nuevo usuario",
                     codigo: EErrors.TIPO_INVALIDO
                 });
-            } 
+            }
             const nuevoCarrito = new CartModel();
             await nuevoCarrito.save();
 
@@ -27,12 +28,13 @@ class UserController {
                 first_name,
                 last_name,
                 email,
-                cart: nuevoCarrito._id, 
+                cart: nuevoCarrito._id,
                 password: createHash(password),
                 age
             });
 
             await nuevoUsuario.save();
+            console.log(nuevoUsuario());
 
             const token = jwt.sign({ user: nuevoUsuario }, "coderhouse", {
                 expiresIn: "1h"
@@ -43,6 +45,7 @@ class UserController {
                 httpOnly: true
             });
 
+            
             res.redirect("/api/users/profile");
         } catch (error) {
             console.error(error);
