@@ -56,7 +56,8 @@ class ViewsController {
             const carrito = await cartRepository.obtenerProductosDeCarrito(cartId);
 
             if (!carrito) {
-                console.log("No existe ese carrito con el id");
+                // console.log("No existe ese carrito con el id");
+                req.logger.error("No existe ese carrito con el id");
                 return res.status(404).json({ error: "Carrito no encontrado" });
             }
 

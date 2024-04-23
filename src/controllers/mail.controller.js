@@ -31,9 +31,11 @@ class MailController {
                 html
             })
 
+            req.logger.info("Mensaje Enviado");
             res.send("Mensaje enviado");
         } catch (error) {
-            res.status(500).send("Error al enviar mail!");
+            req.logger.error("Error al enviar el email")
+            res.status(500).send("Error al enviar email!");
         }
     }
 
@@ -52,8 +54,8 @@ class MailController {
                 to: "pablo.cuentasp@hotmail.com",
                 subject: "Correo de prueba",
                 //se puede adjuntar cualquier clase de información para enviar
-                html: `<h1>Con imagenes</h1>
-                        <img src="cid:Fondo Marcas">`,
+                html: `<h1>Con imagenes</h1>`,
+                // <img src="cid:Fondo Marcas">
                 //Para enviar como adjunto: 
                 attachments: [{
                     filename: "fondo-marcas.jpg",
@@ -61,7 +63,10 @@ class MailController {
                     cid: "Fondo Marcas"
                 }]
             })
+
+            req.logger.info("Correo enviado correctamente");
             res.send("Correo enviado correctamente");
+
         } catch (error) {
             res.status(500).send("Error al enviar mail");
         }
@@ -88,9 +93,13 @@ class MailController {
                 subject: "TEST",
                 text: mensaje
             })
+
+            req.logger.info("Correo enviado correctamente");
             res.send("Correo enviado correctamente!");
+
         } catch (error) {
-            res.status(500).send("Error al enviar mail, vas a morir");
+            req.logger.error("Error al enviar mail")
+            res.status(500).send("Error al enviar mail");
         }
     }
 }

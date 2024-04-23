@@ -18,6 +18,7 @@ const multer = require("multer");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
+const addLogger = require("./utils/logger.js");
 
 
 //Passport:
@@ -46,6 +47,8 @@ app.use(passport.initialize());
 const authMiddleware = require("./middleware/authmiddleware.js");
 app.use(authMiddleware);
 
+app.use(addLogger);
+
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
@@ -62,7 +65,7 @@ app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 app.use(compression({
-    brotli:{enabled:true, zlib:{}}
+    brotli: { enabled: true, zlib: {} }
 }));
 
 app.use(manejadorError);//
@@ -77,6 +80,21 @@ const storage = multer.diskStorage({
 })
 
 app.use(multer({ storage }).single("image"));
+
+app.use("/warning", (req, res) => {
+    req.logger.warn("¡Cuidado! Hombre Radioactivo");
+    res.send("Prueba de warning");
+})
+
+app.get("/loggertest", (req, res) => {
+
+    req.logger.error("Error fatal");
+    req.logger.debug("Mensaje de debug");
+    req.logger.info("Mensaje de Info");
+    req.logger.warn("Mensaje de Warning");
+    res.send("Test de logs");
+
+})
 
 //app.use("/", imagenRouter);
 

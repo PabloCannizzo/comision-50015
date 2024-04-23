@@ -48,7 +48,8 @@ class UserController {
             
             res.redirect("/api/users/profile");
         } catch (error) {
-            console.error(error);
+            // console.error(error);
+            req.logger.error("Error Interno del servidor");
             res.status(500).send("Error interno del servidor");
         }
     }
@@ -59,11 +60,13 @@ class UserController {
             const usuarioEncontrado = await UserModel.findOne({ email });
 
             if (!usuarioEncontrado) {
+                req.logger.error("Usuario no valido");
                 return res.status(401).send("Usuario no válido");
             }
 
             const esValido = isValidPassword(password, usuarioEncontrado);
             if (!esValido) {
+                req.logger.error("Contraseña Incorrecta");
                 return res.status(401).send("Contraseña incorrecta");
             }
 
@@ -78,7 +81,8 @@ class UserController {
 
             res.redirect("/api/users/profile");
         } catch (error) {
-            console.error(error);
+            // console.error(error);
+            req.logger.error("Error interno del servidor!");
             res.status(500).send("Error interno del servidor");
         }
     }
