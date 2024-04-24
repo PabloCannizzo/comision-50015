@@ -64,10 +64,13 @@ app.use("/mockingproducts", usermocksRouter);
 app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
+
+// Manejo de compresion de nuestra app. Optimizacion
 app.use(compression({
     brotli: { enabled: true, zlib: {} }
 }));
 
+// Manejo de errores
 app.use(manejadorError);//
 
 const storage = multer.diskStorage({
@@ -81,20 +84,44 @@ const storage = multer.diskStorage({
 
 app.use(multer({ storage }).single("image"));
 
-app.use("/warning", (req, res) => {
-    req.logger.warn("¡Cuidado! Hombre Radioactivo");
-    res.send("Prueba de warning");
-})
+
+// Implementacion de Logger
 
 app.get("/loggertest", (req, res) => {
 
-    req.logger.error("Error fatal");
-    req.logger.debug("Mensaje de debug");
+    req.logger.fatal("Error fatal");
+    req.logger.error("Mensaje de Error");
+    req.logger.warning("Mensaje de Warning");
     req.logger.info("Mensaje de Info");
-    req.logger.warn("Mensaje de Warning");
+    req.logger.http("mensaje de http");
+    req.logger.debug("Mensaje de debug");
+    
     res.send("Test de logs");
 
 })
+
+// simulacion de operaciones simples y complejas. Aplicamos Artillery
+
+app.get("/operacionsimple", (req, res) => {
+    let suma = 0;
+    for (let i = 0; i < 1000000; i++) {
+        suma += i;
+    }
+    res.send({ suma });
+})
+
+app.get("/operacioncompleja", (req, res) => {
+    let suma = 0;
+    for (let i = 0; i < 5e8; i++) {
+        suma += i;
+    }
+    res.send({ suma });
+})
+
+// artillery quick --count 40 --num 50 "http://localhost:8080/operacioncompleja" -o compleja.json
+
+// artillery quick --count 40 --num 50 "http://localhost:8080/operacionsimple" -o simple.json
+
 
 //app.use("/", imagenRouter);
 

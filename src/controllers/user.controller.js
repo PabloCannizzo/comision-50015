@@ -61,6 +61,12 @@ class UserController {
 
             if (!usuarioEncontrado) {
                 req.logger.error("Usuario no valido");
+                // throw CustomError.crearError({
+                //     nombre: "Usuario",
+                //     causa: generarInfoError({ email }),
+                //     mensaje: "Error de ingreso",
+                //     codigo: EErrors.TIPO_INVALIDO
+                // });
                 return res.status(401).send("Usuario no válido");
             }
 

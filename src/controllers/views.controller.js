@@ -43,10 +43,7 @@ class ViewsController {
 
         } catch (error) {
             console.error("Error al obtener productos", error);
-            res.status(500).json({
-                status: 'error',
-                error: "Error interno del servidor"
-            });
+            answer(res, 500, "Error interno del servidor");
         }
     }
 
@@ -58,7 +55,7 @@ class ViewsController {
             if (!carrito) {
                 // console.log("No existe ese carrito con el id");
                 req.logger.error("No existe ese carrito con el id");
-                return res.status(404).json({ error: "Carrito no encontrado" });
+                return answer(res, 404, "Carrito no encontrado");
             }
 
 
@@ -82,7 +79,7 @@ class ViewsController {
             res.render("carts", { productos: productosEnCarrito, totalCompra, cartId });
         } catch (error) {
             console.error("Error al obtener el carrito", error);
-            res.status(500).json({ error: "Error interno del servidor" });
+            answer(res, 500, { error: "Error interno del servidor" });
         }
     }
 
@@ -99,7 +96,7 @@ class ViewsController {
             res.render("realtimeproducts");
         } catch (error) {
             console.log("error en la vista real time", error);
-            res.status(500).json({ error: "Error interno del servidor" });
+            answer(res, 500, { error: "Error interno del servidor" });
         }
     }
 
