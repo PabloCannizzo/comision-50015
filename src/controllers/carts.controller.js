@@ -13,8 +13,10 @@ class CartController {
     async nuevoCarrito(req, res) {
         try {
             const nuevoCarrito = await cartRepository.crearCarrito();
+            req.logger.info(`Nuevo carrito creado - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.json(nuevoCarrito);
         } catch (error) {
+            req.logger.error(`Error al crear el carrito - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.status(500).send("Error");
         }
     }
@@ -24,7 +26,8 @@ class CartController {
         try {
             const productos = await cartRepository.obtenerProductosDeCarrito(carritoId);
             if (!productos) {
-                return res.status(404).json({ error: "Carrito no encontrado" });
+                req.logger.error(`Error al obtener productos del carrito - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+                return res.status(404).json({ error: "Productos del carrito no encontrados" });
             }
             res.json(productos);
         } catch (error) {
@@ -39,6 +42,8 @@ class CartController {
         try {
             await cartRepository.agregarProducto(cartId, productId, quantity);
             const carritoID = (req.user.cart).toString();
+
+            req.logger.warning(`Producto del carrito agregado - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
 
             res.redirect(`/carts/${carritoID}`)
         } catch (error) {
@@ -56,6 +61,9 @@ class CartController {
                 message: 'Producto eliminado del carrito correctamente',
                 updatedCart,
             });
+
+            req.logger.warning(`Producto eliminado del carrito correctamente - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+
         } catch (error) {
             res.status(500).send("Error");
         }
@@ -68,6 +76,8 @@ class CartController {
         try {
             const updatedCart = await cartRepository.actualizarProductosEnCarrito(cartId, updatedProducts);
             res.json(updatedCart);
+
+            req.logger.info(`Prodcuto actualizado en el carrito - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         } catch (error) {
             res.status(500).send("Error");
         }
@@ -86,6 +96,7 @@ class CartController {
                 updatedCart,
             });
 
+            req.logger.info(`Cantidad del producto actualizada correctamente - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         } catch (error) {
             res.status(500).send("Error al actualizar la cantidad de productos");
         }
@@ -101,6 +112,8 @@ class CartController {
                 message: 'Todos los productos del carrito fueron eliminados correctamente',
                 updatedCart,
             });
+
+            req.logger.warning(`Todos los productos del carrito fueron eliminados correctamente - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
 
         } catch (error) {
             res.status(500).send("Error");
@@ -151,7 +164,8 @@ class CartController {
 
             res.status(200).json({ productosNoDisponibles });
         } catch (error) {
-            console.error('Error al procesar la compra:', error);
+            req.logger.error(`Error al procesar la compra - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+            //console.error('Error al procesar la compra:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }

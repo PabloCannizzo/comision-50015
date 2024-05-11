@@ -1,6 +1,6 @@
 const winston = require("winston");
 const configObject = require("../config/config.js");
-const { node_env } = configObject;
+const { MONGO_URL } = configObject;
 
 // const logger = winston.createLogger({
 //     // le paso un objeto de configuracion.
@@ -48,6 +48,12 @@ const loggerDevelopment = winston.createLogger({
                 winston.format.colorize({ colors: niveles.colores }),
                 winston.format.simple()
             )
+        }),
+
+        new winston.transports.File({
+            filename: "./developmentError.log",
+            level: "error",
+            format: winston.format.simple()
         })
     ]
 })
@@ -76,7 +82,7 @@ const loggerProduction = winston.createLogger({
 
 //Determinar que logger utilizar segun el entorno: 
 
-const logger = node_env === "produccion" ? loggerProduction : loggerDevelopment;
+const logger = MONGO_URL === "produccion" ? loggerProduction : loggerDevelopment;
 
 
 // const logger = winston.createLogger({

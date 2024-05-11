@@ -64,7 +64,7 @@ class MailController {
                 }]
             })
 
-            req.logger.info("Correo enviado correctamente");
+            req.logger.info(`Correo enviado correctamente - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.send("Correo enviado correctamente");
 
         } catch (error) {
@@ -94,11 +94,11 @@ class MailController {
                 text: mensaje
             })
 
-            req.logger.info("Correo enviado correctamente");
+            req.logger.info(`Correo enviado correctamente - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.send("Correo enviado correctamente!");
 
         } catch (error) {
-            req.logger.error("Error al enviar mail")
+            req.logger.error(`Error al enviar mail - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
             res.status(500).send("Error al enviar mail");
         }
     }

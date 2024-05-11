@@ -94,7 +94,7 @@ app.get("/loggertest", (req, res) => {
     req.logger.warning("Mensaje de Warning");
     req.logger.info("Mensaje de Info");
     req.logger.http("mensaje de http");
-    req.logger.debug("Mensaje de debug");
+    req.logger.debug("Mensaje de debug" + `Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
     
     res.send("Test de logs");
 
@@ -121,6 +121,14 @@ app.get("/operacioncompleja", (req, res) => {
 // artillery quick --count 40 --num 50 "http://localhost:8080/operacioncompleja" -o compleja.json
 
 // artillery quick --count 40 --num 50 "http://localhost:8080/operacionsimple" -o simple.json
+
+/////////////////// 
+// DETERMINO EL NUMERO DE PROCESADORES QUE TENGO
+const cluter = require("cluster");
+const {cpus} = require("os");
+const numeroDeProcesadores = cpus().length;
+console.log("Número de procesadores:", numeroDeProcesadores);
+
 
 
 //app.use("/", imagenRouter);

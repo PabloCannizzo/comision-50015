@@ -14,6 +14,7 @@ class UserController {
         try {
             const existeUsuario = await UserModel.find({ first_name, last_name, email });
             if (!existeUsuario) {
+                req.logger.error(`Error al intentar crear el usuario - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
                 throw CustomError.crearError({
                     nombre: "Usuario nuevo",
                     causa: generarInfoError({ first_name, last_name, email }),
@@ -34,7 +35,9 @@ class UserController {
             });
 
             await nuevoUsuario.save();
+
             console.log(nuevoUsuario());
+            req.logger.info(nuevoUsuario(), `Nuevo usuario creado - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}` );
 
             const token = jwt.sign({ user: nuevoUsuario }, "coderhouse", {
                 expiresIn: "1h"
@@ -45,11 +48,10 @@ class UserController {
                 httpOnly: true
             });
 
-            
             res.redirect("/api/users/profile");
         } catch (error) {
             // console.error(error);
-            req.logger.error("Error Interno del servidor");
+            req.logger.error(`Error Interno del servidor - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.status(500).send("Error interno del servidor");
         }
     }
@@ -60,19 +62,21 @@ class UserController {
             const usuarioEncontrado = await UserModel.findOne({ email });
 
             if (!usuarioEncontrado) {
-                req.logger.error("Usuario no valido");
-                // throw CustomError.crearError({
-                //     nombre: "Usuario",
-                //     causa: generarInfoError({ email }),
-                //     mensaje: "Error de ingreso",
-                //     codigo: EErrors.TIPO_INVALIDO
-                // });
-                return res.status(401).send("Usuario no válido");
+                req.logger.error(`Usuario no valido - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+                throw CustomError.crearError({
+                    nombre: "Usuario",
+                    causa: generarInfoError({ email }),
+                    mensaje: "Error de ingreso",
+                    codigo: EErrors.TIPO_INVALIDO
+                });
+
+                //aplicar el formato de error en los otros controladores e incorporar el req.logger. + "el error"...
+                //return res.status(401).send("Usuario no válido");
             }
 
             const esValido = isValidPassword(password, usuarioEncontrado);
             if (!esValido) {
-                req.logger.error("Contraseña Incorrecta");
+                req.logger.error(`Contraseña Incorrecta - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
                 return res.status(401).send("Contraseña incorrecta");
             }
 
@@ -86,9 +90,11 @@ class UserController {
             });
 
             res.redirect("/api/users/profile");
+            req.logger.info(`Usuario Ingresado - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+
         } catch (error) {
             // console.error(error);
-            req.logger.error("Error interno del servidor!");
+            req.logger.error(`Error interno del servidor! - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.status(500).send("Error interno del servidor");
         }
     }
