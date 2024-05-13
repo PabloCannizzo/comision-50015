@@ -13,7 +13,7 @@ switch(config.persistencia){
         DAO = require("./fs/product-manager.js");
         break;
     default: 
-        throw new Error("Persistencia no valida, moriras en 7 dias. ");
+        throw new Error("Persistencia no valida");
 }
 
 module.exports = DAO; 

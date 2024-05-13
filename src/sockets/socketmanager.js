@@ -1,6 +1,6 @@
 const socket = require("socket.io");
 const ProductRepository = require("../repositories/product.repository.js");
-const productRepository = new ProductRepository(); 
+const productRepository = new ProductRepository();
 const MessageModel = require("../dao/models/message.model.js");
 
 class SocketManager {
@@ -12,8 +12,8 @@ class SocketManager {
     async initSocketEvents() {
         this.io.on("connection", async (socket) => {
             console.log("Un cliente se conectó");
-            
-            socket.emit("productos", await productRepository.obtenerProductos() );
+
+            socket.emit("productos", await productRepository.obtenerProductos());
 
             socket.on("eliminarProducto", async (id) => {
                 await productRepository.eliminarProducto(id);
@@ -22,6 +22,7 @@ class SocketManager {
 
             socket.on("agregarProducto", async (producto) => {
                 await productRepository.agregarProducto(producto);
+                console.log(producto);
                 this.emitUpdatedProducts(socket);
             });
 

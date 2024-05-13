@@ -5,15 +5,20 @@
     <p>Producto: {{this.product.title}}</p>
     <p>Cantidad: {{this.quantity}}</p>
     <p>Precio: ${{this.product.totalPrice}}</p>
-    <button onclick="deleteProduct("{{this.cartId}}", "{{this.product._id}}")">Eliminar</button>
+    <button onclick="deleteProduct(" {{this.cartId}}", "{{this.product._id}}" )">Eliminar</button>
 </div>
 {{/each}}
 
 <button onclick="deleteCarts('{{cartId}}')" class="btn">Vaciar Carrito</button>
 <h3>Total de la compra: ${{totalCompra}}</h3>
+
+<form method="post" action="/api/carts/{{cartId}}/purchase">
+    <button type="submit" class="btn btn-success">Finalizar Compra</button>
+</form>
+
 {{!-- Organizar en un módulo en PUBLIC/JS --}}
 <script>
-    function deleteProduct(cartId, productId) {
+    function eliminarProducto(cartId, productId) {
         fetch(`/api/carts/${cartId}/product/${productId}`, {
             method: 'DELETE'
         })
@@ -28,7 +33,7 @@
             });
     }
 
-    function deleteCarts(cartId) {
+    function vaciarCarrito(cartId) {
         fetch(`/api/carts/${cartId}`, {
             method: 'DELETE'
         })

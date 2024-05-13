@@ -6,7 +6,10 @@ const UserModel = require("../dao/models/user.model.js");
 const ProductRepository = require("../repositories/product.repository.js");
 const productRepository = new ProductRepository();
 const { generateUniqueCode, calcularTotal } = require("../utils/cartUtils.js");
-
+const MailController = require("../service/connections/email.js");
+const mailController = new MailController();
+const ContactController = require("../service/connections/phone.js");
+const contactController = new ContactController();
 
 
 class CartController {
@@ -72,14 +75,15 @@ class CartController {
     async actualizarProductosEnCarrito(req, res) {
         const cartId = req.params.cid;
         const updatedProducts = req.body;
-        
+
         try {
             const updatedCart = await cartRepository.actualizarProductosEnCarrito(cartId, updatedProducts);
             res.json(updatedCart);
 
-            req.logger.info(`Prodcuto actualizado en el carrito - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+            req.logger.info(`Producto actualizado en el carrito - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         } catch (error) {
             res.status(500).send("Error");
+            req.logger.error(`Error al actualizar el prodcuto - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         }
     }
 
@@ -99,6 +103,8 @@ class CartController {
             req.logger.info(`Cantidad del producto actualizada correctamente - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         } catch (error) {
             res.status(500).send("Error al actualizar la cantidad de productos");
+
+            req.logger.error(`Error al actualizar la cantidad de productos - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         }
     }
 
@@ -117,6 +123,8 @@ class CartController {
 
         } catch (error) {
             res.status(500).send("Error");
+
+            req.logger.error(`Error al vaciar el carrito - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
         }
     }
 
@@ -162,10 +170,21 @@ class CartController {
             // Guardar el carrito actualizado en la base de datos
             await cart.save();
 
-            res.status(200).json({ productosNoDisponibles });
+            await mailController.enviarCorreoCompra(userWithCart.email, userWithCart.first_name, ticket._id);
+
+            res.render("checkout", {
+                cliente: userWithCart.first_name,
+                email: userWithCart.email,
+                numTicket: ticket._id
+            });
+
+            req.logger.info(`Compra Finalizada con Exito! - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
+
+            await contactController.getSms();
+
         } catch (error) {
             req.logger.error(`Error al procesar la compra - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
-            //console.error('Error al procesar la compra:', error);
+
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }

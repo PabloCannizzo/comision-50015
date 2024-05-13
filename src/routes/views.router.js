@@ -12,8 +12,12 @@ router.get("/login", viewsController.renderLogin);
 router.get("/register", viewsController.renderRegister);
 router.get("/realtimeproducts", checkUserRole(['admin']), viewsController.renderRealTimeProducts);
 router.get("/chat", checkUserRole(['usuario']) ,viewsController.renderChat);
-router.get("/home", viewsController.renderHome);
-
+router.get("/", viewsController.renderHome); 
+// Comentado (/home)
+router.get("/reset-password", viewsController.renderResetPassword);
+router.get("/password", viewsController.renderCambioPassword);
+router.get("/confirmacion-envio", viewsController.renderConfirmacion);
+router.get("/panel-premium", viewsController.renderPremium);
 
 
 module.exports = router; 

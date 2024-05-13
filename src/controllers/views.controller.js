@@ -92,11 +92,12 @@ class ViewsController {
     }
 
     async renderRealTimeProducts(req, res) {
+        const usuario = req.user;
         try {
-            res.render("realtimeproducts");
+            res.render("realtimeproducts", { role: usuario.role, email: usuario.email });
         } catch (error) {
-            console.log("error en la vista real time", error);
-            answer(res, 500, { error: "Error interno del servidor" });
+            req.logger.error(`Error en la vista RealTime - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+            res.status(500).json({ error: "Error interno del servidor" });
         }
     }
 
@@ -106,6 +107,22 @@ class ViewsController {
 
     async renderHome(req, res) {
         res.render("home");
+    }
+
+    async renderResetPassword(req, res) {
+        res.render("passwordreset");
+    }
+
+    async renderCambioPassword(req, res) {
+        res.render("passwordchange");
+    }
+
+    async renderConfirmacion(req, res) {
+        res.render("confirmation-send");
+    }
+
+    async renderPremium(req, res) {
+        res.render("panel-premium");
     }
 }
 

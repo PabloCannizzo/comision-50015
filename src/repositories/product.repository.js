@@ -1,7 +1,7 @@
 const ProductModel = require("../dao/models/product.model.js");
 
 class ProductRepository {
-    async agregarProducto({ title, description, price, img, code, stock, category, thumbnails }) {
+    async agregarProducto({ title, description, price, img, code, stock, category, thumbnails, owner }) {
         try {
             if (!title || !description || !price || !code || !stock || !category) {
                 console.log("Todos los campos son obligatorios");
@@ -15,6 +15,8 @@ class ProductRepository {
                 return;
             }
 
+            console.log("Owner", owner);
+
             const newProduct = new ProductModel({
                 title,
                 description,
@@ -24,7 +26,8 @@ class ProductRepository {
                 stock,
                 category,
                 status: true,
-                thumbnails: thumbnails || []
+                thumbnails: thumbnails || [],
+                owner
             });
 
             await newProduct.save();

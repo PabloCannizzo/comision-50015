@@ -8,7 +8,6 @@ const cartsRouter = require("./routes/carts.router.js");
 const userRouter = require("./routes/user.router.js");
 
 const contactRouter = require("./routes/contact.router.js");
-const mailRouter = require("./routes/mail.router.js");
 const usermocksRouter = require("./routes/usermocks.router.js");
 const manejadorError = require("./middleware/error.js");
 const compression = require("express-compression");
@@ -19,7 +18,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const addLogger = require("./utils/logger.js");
-
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUiExpress = require("swagger-ui-express");
 
 //Passport:
 const passport = require("passport");
@@ -56,7 +56,6 @@ app.use("/", viewsRouter);
 app.use("/api/users", userRouter);
 
 app.use("/contact", contactRouter);
-app.use("/mail", mailRouter);
 app.use("/mockingproducts", usermocksRouter);
 
 //app.use("/static", express.static(path.join(__dirname, "..", "public")));
