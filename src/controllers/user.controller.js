@@ -39,8 +39,7 @@ class UserController {
 
             await nuevoUsuario.save();
 
-            console.log(nuevoUsuario());
-            req.logger.info(nuevoUsuario(), `Nuevo usuario creado - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+            req.logger.info(`Nuevo usuario creado - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
 
             const token = jwt.sign({ user: nuevoUsuario }, "coderhouse", {
                 expiresIn: "1h"
@@ -55,7 +54,7 @@ class UserController {
 
         } catch (error) {
             // console.error(error);
-            req.logger.error(`Error Interno del servidor - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+            req.logger.error(`Error en el registro - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.status(500).send("Error interno del servidor");
         }
     }
@@ -104,16 +103,15 @@ class UserController {
     }
 
     async profile(req, res) {
-        //Con DTO: 
         try {
             const isPremium = req.user.role === 'premium';
             const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.role);
             const isAdmin = req.user.role === 'admin';
-            res.render("profile", { user: userDto, isAdmin, isPremium });
-            
+
+            res.render("profile", { user: userDto, isPremium, isAdmin });
         } catch (error) {
-            res.status(500).send("Error interno del servidor");
-            req.logger.error(`Error interno del servidor! - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+            res.status(500).send('Error interno del servidor');
+            req.logger.error(`Error en el perfil - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
         }
     }
 

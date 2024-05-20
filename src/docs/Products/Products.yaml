@@ -1,0 +1,204 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtenemos todos los productos de la BD
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Obtienen todos los productos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":
+          description: Error interno del servidor
+    post:
+      summary: Creamos un nuevo producto en la BD
+      tags: 
+        - Products
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: "#components/requestBodies/addProduct"
+      responses:
+        "201":
+          description: Producto creado correctamente
+        "404":
+          description: Error al crear un nuevo producto
+  /api/products/{uid}:
+    get:
+      summary: Obtiene un producto por ID
+      tags: 
+        - Products
+      parameters: 
+      - name: uid
+        in: path
+        required: true
+        description: id del producto que se quiere buscar
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Actualizamos un producto por su ID
+      tags: 
+        - Products
+      parameters: 
+      - name: uid
+        in: path
+        required: true
+        description: id del producto que se quiere actualizar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+      responses:
+        "200":
+          description: Producto actualizado correctamente
+        "404":
+          description: Producto no encontrado
+        "500":
+          description: Error interno del servidor
+    delete:
+      summary: Eliminamos un producto por su ID
+      tags: 
+        - Products
+      parameters: 
+      - name: uid
+        in: path
+        required: true
+        description: id del producto que se quiere eliminar
+        schema:
+          type: string
+      responses:
+        "201":
+          description: Producto eliminado correctamente
+        "404":
+          description: Producto no encontrado
+        "500":
+          description: Error interno del servidor
+components:
+  schemas:
+    Products:
+      type: object
+      properties: 
+        _id: 
+          type: ObjectId
+          description: Id autogenerado por MongoDB
+        title: 
+          type: string
+          description: Titulo del productos
+        description: 
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        img:
+          type: string
+          description: Imagen del producto
+        code:
+          type: string
+          description: Codigo del producto
+        stock:
+          type: string
+          description: Stock disponible del producto
+        category:
+          type: string
+          description: Categoria del producto
+        status:
+          type: bulean
+          description: True or False
+      example: 
+        title: "Plastilinas"
+        description: "Toys"
+        price: 15000
+        img: "sin imagen"
+        code: "ab899"
+        stock: 10
+        category: "Juegos Didacticos"
+        status: true
+  requestBodies:
+    addProduct:
+      type: object
+      properties: 
+        title: 
+          type: string
+          description: Titulo del productos
+        description: 
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        img:
+          type: string
+          description: Imagen del producto
+        code:
+          type: string
+          description: Codigo del producto
+        stock:
+          type: string
+          description: Stock disponible del producto
+        category:
+          type: string
+          description: Categoria del producto
+      example: 
+        title: "Lapiceras de Colores"
+        description: "Maped"
+        price: 15000
+        img: "sin imagen"
+        code: "ab900"
+        stock: 10
+        category: "Recreación"
+    updateProduct:
+      type: object
+      properties: 
+        title: 
+          type: string
+          description: Titulo del productos
+        description: 
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        img:
+          type: string
+          description: Imagen del producto
+        code:
+          type: string
+          description: Codigo del producto
+        stock:
+          type: string
+          description: Stock disponible del producto
+        category:
+          type: string
+          description: Categoria del producto
+      example: 
+        title: "Lapiceras de Colores"
+        description: "Maped"
+        price: 15000
+        img: "sin imagen"
+        code: "ab900"
+        stock: 10
+        category: "Recreación"
+  

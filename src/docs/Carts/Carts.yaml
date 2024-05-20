@@ -1,0 +1,215 @@
+paths:
+  /api/carts:
+    post:
+      summary: Creamos un nuevo carrito
+      tags:
+        - Carts
+      responses:
+        "201":
+          description: Carrito creado correctamente
+        "404":
+          description: Error al crear un nuevo carrito
+  /api/carts/{cid}:
+    get:
+      summary: Traemos un carrito ya creado
+      tags: 
+        - Carts
+      parameters: 
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito ya creado
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: "#components/requestBodies/getCart"
+      responses:
+        "201":
+          description: Carrito ingresado correctamente
+        "404":
+          description: Error interno del servidor
+    delete:
+      summary: Vaciar el carrito
+      tags: 
+        - Carts
+      parameters: 
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito ya creado
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: "#components/requestBodies/deleteCart"
+      responses:
+        "201":
+          description: Carrito ingresado correctamente
+        "404":
+          description: Error interno del servidor
+  /api/carts/{cid}/product/{pid}:
+    put:
+      summary: Actulizamos el carrito
+      tags:
+        - Carts
+      parameters: 
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          type: string
+      - name: pid
+        in: path
+        required: true
+        description: id del producto que se quiere actualizar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProductCart"
+      responses:
+        "201":
+          description: Productos agregado al carrito correctamente
+        "404":
+          description: Error al agregar el producto
+        "500":
+          description: Error interno del servidor
+    delete:
+      summary: Eliminamos un producto del carrito
+      tags: 
+        - Carts
+      parameters: 
+      - name: uid
+        in: path
+        required: true
+        description: id del producto que se quiere eliminar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/deleteProductCart"
+      responses:
+        "201":
+          description: Producto eliminado del carrito correctamente
+        "404":
+          description: Error al aeliminar el producto
+    post:
+      summary: Agregamos un producto al carrito
+      tags:
+        - Carts
+      parameters: 
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito que se desea agregar el producto
+        schema:
+          type: string
+      - name: pid
+        in: path
+        required: true
+        description: id del producto que se quiere agregar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/addProductInCart"
+      responses:
+        "201":
+          description: Productos agregado al carrito correctamente
+        "404":
+          description: Error al agregar el producto
+        "500":
+          description: Error interno del servidor
+components:
+  schema:
+    Carts:
+      type: Object
+      properties:
+        product: 
+          type: ObjectId
+          description: Id del carrito generado
+        quantity: 
+          type: Number
+          description: Cantidad de un producto dentro del carrito seleccionado
+  requestBodies:
+    getCart:
+      type: object
+      properties:
+        _id: 
+          type: ObjectId
+          description: ID del carrito creado
+        product:
+          _id: 
+            type: ObjectId
+            description: ID del producto agregado
+          title: 
+            type: string
+            description: Nombre del producto agregado
+          price:
+            type: number
+            description: Precio del producto
+        quantity:
+          type: number
+          description: Cantidad de articulos de un mismo producto
+      example:
+        _id: 664ace4cb46c19d918f8bb8b,
+        products: [
+          {
+            product: {
+                _id: 661722d79d6c61be482f9091,
+                title: HotWheells,
+                price: 7000
+            },
+            quantity: 1,
+            _id: "664ace89b46c19d918f8bb8e"
+          }
+        ]
+        __v: 1
+    # getCart:
+    #   type: object
+    #   properties:
+    #     _id: 
+    #       type: ObjectId
+    #       description: ID del carrito creado
+    #   example:
+    #     _id: 664ace4cb46c19d918f8bb8b,
+    #     products: [
+    #       {
+    #         product: {
+    #             _id: 661722d79d6c61be482f9091,
+    #             title: HotWheells,
+    #             price: 7000
+    #         },
+    #         quantity: 1,
+    #         _id: "664ace89b46c19d918f8bb8e"
+    #       }
+    #     ]
+    #     __v: 1
+    # updateProductCart:
+    #   type: object
+    #   properties:
+    #     products: []
+    #       type: object
+    #       description: Se crea un nuevo array (carrito) vacio
+    #     _id:
+    #       type: ObjectId
+    #       description: Se genera un ID para el nuevo carrito
+    #   example:
+        

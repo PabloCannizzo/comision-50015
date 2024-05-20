@@ -12,3 +12,16 @@ error: Error Interno del servidor - Method: POST en /requestPasswordReset - 13/5
 error: Error al procesar la compra - Method: POST en /66426356065400f817cac8e6/purchase - 13/5/2024
 error: Error al procesar la compra - Method: POST en /66426356065400f817cac8e6/purchase - 13/5/2024
 error: Error Interno del servidor - Method: POST en /requestPasswordReset - 13/5/2024
+error: Error Interno del servidor - Method: POST en /register - 13/5/2024
+error: Error al procesar la compra - Method: POST en /664299db29a870c2848c42cf/purchase - 13/5/2024
+error: Usuario no valido - Method: POST en /login - 19/5/2024
+error: Error interno del servidor! - Method: POST en /login - 19/5/2024
+error: Contraseña Incorrecta - Method: POST en /login - 19/5/2024
+error: Contraseña Incorrecta - Method: POST en /login - 19/5/2024
+error: Contraseña Incorrecta - Method: POST en /login - 19/5/2024
+error: Error Interno del servidor - Method: POST en /requestPasswordReset - 19/5/2024
+error: Error Interno del servidor - Method: POST en /register - 20/5/2024
+error: Error Interno del servidor - Method: POST en /register - 20/5/2024
+error: Error al procesar la compra - Method: POST en /664ae232467ddb062c373b1f/purchase - 20/5/2024
+error: Error al obtener productos del carrito - Method: GET en /66426356065400f817cac8e6 - 20/5/2024
+error: Error al obtener productos del carrito - Method: GET en /661f841d93a3b79bd475564d - 20/5/2024

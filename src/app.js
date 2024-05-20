@@ -21,6 +21,7 @@ const addLogger = require("./utils/logger.js");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUiExpress = require("swagger-ui-express");
 
+
 //Passport:
 const passport = require("passport");
 const initializePassport = require("./config/passport.config.js");
@@ -94,7 +95,7 @@ app.get("/loggertest", (req, res) => {
     req.logger.info("Mensaje de Info");
     req.logger.http("mensaje de http");
     req.logger.debug("Mensaje de debug" + `Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
-    
+
     res.send("Test de logs");
 
 })
@@ -124,10 +125,25 @@ app.get("/operacioncompleja", (req, res) => {
 /////////////////// 
 // DETERMINO EL NUMERO DE PROCESADORES QUE TENGO
 const cluter = require("cluster");
-const {cpus} = require("os");
+const { cpus } = require("os");
 const numeroDeProcesadores = cpus().length;
 console.log("Número de procesadores:", numeroDeProcesadores);
 
+//////////// swagger //////////////////////
+
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.1",
+        info: {
+            title: "Documentacion de la App E-commerce",
+            description: "App dedicada a nuestro proyecto de Backend"
+        }
+    },
+    apis: ["./src/docs/**/*.yaml"]
+}
+
+const specs = swaggerJSDoc(swaggerOptions);
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 
 //app.use("/", imagenRouter);
