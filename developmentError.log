@@ -25,3 +25,13 @@ error: Error Interno del servidor - Method: POST en /register - 20/5/2024
 error: Error al procesar la compra - Method: POST en /664ae232467ddb062c373b1f/purchase - 20/5/2024
 error: Error al obtener productos del carrito - Method: GET en /66426356065400f817cac8e6 - 20/5/2024
 error: Error al obtener productos del carrito - Method: GET en /661f841d93a3b79bd475564d - 20/5/2024
+error: Error al intentar crear el usuario - Method: POST en /register - 27/5/2024
+error: Error en el registro - Method: POST en /register - 27/5/2024
+error: Error al intentar crear el usuario - Method: POST en /register - 27/5/2024
+error: Error en el registro - Method: POST en /register - 27/5/2024
+error: Error al intentar crear el usuario - Method: POST en /register - 27/5/2024
+error: Error en el registro - Method: POST en /register - 27/5/2024
+error: Error al procesar la compra - Method: POST en /6654a3197cd2deae9219c9ff/purchase - 27/5/2024
+error: Error al procesar la compra - Method: POST en /6654a3197cd2deae9219c9ff/purchase - 27/5/2024
+error: Error al enviar el email de compra - Method: POST en /6654a3197cd2deae9219c9ff/purchase - 27/5/2024
+error: Error al enviar el email de compra - Method: POST en /6654a3197cd2deae9219c9ff/purchase - 27/5/2024

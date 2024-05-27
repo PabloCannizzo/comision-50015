@@ -170,7 +170,11 @@ class CartController {
             // Guardar el carrito actualizado en la base de datos
             await cart.save();
 
-            await mailController.enviarCorreoCompra(userWithCart.email, userWithCart.first_name, ticket._id);
+            try {
+                await mailController.enviarCorreoCompra(userWithCart.email, userWithCart.first_name, ticket._id);
+            } catch (error) {
+                req.logger.error(`Error al enviar el email de compra - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
+            }
 
             res.render("checkout", {
                 cliente: userWithCart.first_name,
@@ -180,7 +184,7 @@ class CartController {
 
             req.logger.info(`Compra Finalizada con Exito! - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
 
-            await contactController.getSms();
+            // await contactController.getSms();
 
         } catch (error) {
             req.logger.error(`Error al procesar la compra - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);

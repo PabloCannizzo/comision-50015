@@ -6,7 +6,7 @@ const answer = require("../utils/reusable.js");
 class ViewsController {
     async renderProducts(req, res) {
         try {
-            const { page = 1, limit = 3 } = req.query;
+            const { page = 1, limit = 4 } = req.query;
 
             const skip = (page - 1) * limit;
 

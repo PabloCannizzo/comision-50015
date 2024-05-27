@@ -19,7 +19,7 @@ class UserController {
             if (!existeUsuario) {
                 req.logger.error(`Error al intentar crear el usuario - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
                 throw CustomError.crearError({
-                    nombre: "Usuario nuevo",
+                    nombre: "Usuario ya existente",
                     causa: generarInfoError({ first_name, last_name, email }),
                     mensaje: "Error al intentar crear un nuevo usuario",
                     codigo: EErrors.TIPO_INVALIDO
@@ -67,7 +67,7 @@ class UserController {
             if (!usuarioEncontrado) {
                 req.logger.error(`Usuario no valido - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
                 throw CustomError.crearError({
-                    nombre: "Usuario",
+                    nombre: "Usuario no encontrado",
                     causa: generarInfoError({ email }),
                     mensaje: "Error de ingreso",
                     codigo: EErrors.TIPO_INVALIDO
@@ -211,7 +211,7 @@ class UserController {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
             }
 
-            const nuevoRol = user.role === 'usuario' ? 'premium' : 'usuario';
+            const nuevoRol = user.role === "usuario" ? "premium" : "usuario";
 
             const actualizado = await UserModel.findByIdAndUpdate(uid, { role: nuevoRol }, { new: true });
             res.json(actualizado);
