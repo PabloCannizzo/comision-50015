@@ -43,6 +43,7 @@ class ViewsController {
 
         } catch (error) {
             console.error("Error al obtener productos", error);
+            req.logger.error(`Error al obtener productos - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             answer(res, 500, "Error interno del servidor");
         }
     }
@@ -53,7 +54,6 @@ class ViewsController {
             const carrito = await cartRepository.obtenerProductosDeCarrito(cartId);
 
             if (!carrito) {
-                // console.log("No existe ese carrito con el id");
                 req.logger.error("No existe ese carrito con el id");
                 return answer(res, 404, "Carrito no encontrado");
             }

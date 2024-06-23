@@ -1,4 +1,5 @@
 const CartModel = require("../dao/models/cart.model.js");
+const TicketModel = require("../dao/models/ticket.model.js");
 
 class CartRepository {
     async crearCarrito() {
@@ -107,6 +108,21 @@ class CartRepository {
             }
             return cart;
 
+        } catch (error) {
+            throw new Error("Error");
+        }
+    }
+
+    async agregarProductosATicket(products, purchaser) {
+        try {
+            const ticket = new TicketModel({
+                code: generateUniqueCode(),
+                purchase_datetime: new Date(),
+                amount: calcularTotal(products),
+                purchaser
+            });
+            await ticket.save();
+            return ticket;
         } catch (error) {
             throw new Error("Error");
         }

@@ -4,14 +4,18 @@
     <nav>
         <ul>
             {{#if isAuthenticated}}
-
-            <li><a href="/api/users/profile"> Mi Perfil </a></li>
+                <li>
+                    <a href="/api/users/profile"> Mi Perfil </a>
+                </li>
 
             {{else}}
 
-            <li><a href="/login">Iniciar Sesion </a></li>
-            <li><a href="/register"> Registrarse </a></li>
-
+                <li>
+                    <a href="/login">Iniciar Sesion </a>
+                </li>
+                <li>
+                    <a href="/register"> Registrarse </a>
+                </li>
             {{/if}}
         </ul>
     </nav>

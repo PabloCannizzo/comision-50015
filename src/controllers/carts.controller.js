@@ -172,8 +172,9 @@ class CartController {
 
             try {
                 await mailController.enviarCorreoCompra(userWithCart.email, userWithCart.first_name, ticket._id);
+                req.logger.info(`Email de compra enviado! - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             } catch (error) {
-                req.logger.error(`Error al enviar el email de compra - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
+                req.logger.error(`Error al enviar el email de compra - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             }
 
             res.render("checkout", {

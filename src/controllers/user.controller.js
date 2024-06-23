@@ -10,10 +10,12 @@ const { generateResetToken } = require("../utils/tokenreset.js");
 const MailController = require("../service/connections/email.js");
 const mailController = new MailController();
 const answer = require("../utils/reusable.js");
+const UserRepository = require("../repositories/userRepository.js");
+const userRepository = new UserRepository();
 
 class UserController {
     async register(req, res) {
-        const { first_name, last_name, email, password, age} = req.body;
+        const { first_name, last_name, email, password, age } = req.body;
         try {
             const existeUsuario = await UserModel.find({ first_name, last_name, email });
             if (!existeUsuario) {
@@ -53,7 +55,6 @@ class UserController {
             res.redirect("/api/users/profile");
 
         } catch (error) {
-            // console.error(error);
             req.logger.error(`Error en el registro - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             res.status(500).send("Error interno del servidor");
         }
@@ -87,6 +88,9 @@ class UserController {
                 expiresIn: "1h"
             });
 
+            usuarioEncontrado.last_connection = new Date();
+            await usuarioEncontrado.save();
+
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
@@ -116,8 +120,19 @@ class UserController {
     }
 
     async logout(req, res) {
+        if (req.user) {
+            try {
+                req.user.last_connection = new Date();
+                await req.user.save();
+            } catch (error) {
+                console.error(error);
+                res.status(500).send("Error interno del servidor");
+                req.logger.error(`Error interno del servidor - Logout del usuario - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+                return;
+            }
+        }
         res.clearCookie("coderCookieToken");
-        req.logger.info(`Logout del usuario - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+        req.logger.info(`Logout exitoso del usuario - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
 
         res.redirect("/login");
     }
@@ -207,17 +222,68 @@ class UserController {
 
             const user = await UserModel.findById(uid);
 
-            if (!user) {
-                return res.status(404).json({ message: 'Usuario no encontrado' });
+            const requiredDocuments = ['Identificación', 'Comprobante de domicilio', 'Comprobante de estado de cuenta'];
+            const userDocuments = user.documents.map(doc => doc.name);
+
+            const hasRequiredDocuments = requiredDocuments.every(doc => userDocuments.includes(doc));
+
+            if (!hasRequiredDocuments) {
+                return res.status(400).json({ message: 'El usuario debe cargar los siguientes documentos: Identificación, Comprobante de domicilio, Comprobante de estado de cuenta' });
+                // req.logger.error(`Error Interno del servidor - Method: ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
             }
 
             const nuevoRol = user.role === "usuario" ? "premium" : "usuario";
 
-            const actualizado = await UserModel.findByIdAndUpdate(uid, { role: nuevoRol }, { new: true });
+            // const actualizado = await UserModel.findByIdAndUpdate(uid, { role: nuevoRol }, { new: true });
+            const actualizado = await userRepository.updateUserRole(uid, nuevoRol);
             res.json(actualizado);
+
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Error interno del servidor' });
+        }
+    }
+
+    async documents (req, res) {
+        const { uid } = req.params;
+        const uploadedDocuments = req.files;
+
+        try {
+            const user = await userRepository.findById(uid);
+
+            if (!user) {
+                return res.status(404).send("Usuario no encontrado");
+            }
+
+            // Verificar si se subieron documentos y actualizar el usuario
+            if (uploadedDocuments) {
+                if (uploadedDocuments.document) {
+                    user.documents = user.documents.concat(uploadedDocuments.document.map(doc => ({
+                        name: doc.originalname,
+                        reference: doc.path
+                    })));
+                }
+                if (uploadedDocuments.products) {
+                    user.documents = user.documents.concat(uploadedDocuments.products.map(doc => ({
+                        name: doc.originalname,
+                        reference: doc.path
+                    })));
+                }
+                if (uploadedDocuments.profile) {
+                    user.documents = user.documents.concat(uploadedDocuments.profile.map(doc => ({
+                        name: doc.originalname,
+                        reference: doc.path
+                    })));
+                }
+            }
+
+            // Guardar los cambios en la base de datos
+            await user.save();
+
+            res.status(200).send("Documentos subidos exitosamente");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Error interno del servidor');
         }
     }
 }

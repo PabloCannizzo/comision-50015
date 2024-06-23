@@ -3,6 +3,7 @@ const router = express.Router();
 const UserController = require("../controllers/user.controller.js");
 const userController = new UserController();
 const passport = require("passport");
+const upload = require("../middleware/multer.js");
 
 ///////////////// Registro con JSON web Token ///////////////
 
@@ -15,5 +16,7 @@ router.get("/admin", passport.authenticate("jwt", { session: false }), userContr
 router.post("/requestPasswordReset", userController.requestPasswordReset); // Nueva ruta
 router.post('/reset-password', userController.resetPassword);
 router.put("/premium/:uid", userController.cambiarRolPremium);
+router.post(":uid/documents", upload.fields([
+    { name: 'document' }, { name: 'products' }, { name: 'profile' }]), userController.documents );
 
 module.exports = router; 
