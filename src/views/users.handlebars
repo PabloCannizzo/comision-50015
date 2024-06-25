@@ -1,0 +1,15 @@
+<div class="usuarios">
+    {{#each users}}
+    <div class="usuario">
+        <div class="card">
+            <h2>{{user.nombre}}</h2>
+            <h2>{{user.apellido}}</h2>
+            <h2>{{user.email}}</h2>
+            <h2>{{user.role}}</h2>
+            <form action="/api/carts/{{../cartId}}/product/{{id}}" method="DELETE">
+                <button type="submit">Eliminar Usuario</button>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+</div>

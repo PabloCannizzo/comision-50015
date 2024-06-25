@@ -5,14 +5,14 @@ const storage = multer.diskStorage({
         let destinationFolder;
         switch (file.fieldname) {
             case "profile":
-                destinationFolder = "./src/uploads/profiles";
+                destinationFolder = "./src/upload/profiles";
                 break;
             case "products":
-                destinationFolder = "./src/uploads/products";
+                destinationFolder = "./src/upload/products";
                 break;
             case "document":
             default:
-                destinationFolder = "./src/uploads/documents";
+                destinationFolder = "./src/upload/documents";
         }
 
         cb(null, destinationFolder);

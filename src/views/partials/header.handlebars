@@ -1,19 +1,25 @@
 <header>
-    <a href="/products" class="logo">Juguetería</a>
-
-    <nav>
-        <ul>
+    <nav class="navbar">
+        <a class="logo" href="/" class="logo">Juguetería</a>
+        <ul class="menu">
             {{#if isAuthenticated}}
-                <li>
+                <li class="menu-links">
+                    <a href="/">Inicio</a>
+                </li>
+                <li class="menu-links">
+                    <a href="/products">Productos</a>
+                </li>
+                <li class="menu-links">
                     <a href="/api/users/profile"> Mi Perfil </a>
                 </li>
-
             {{else}}
-
-                <li>
+                <li class="menu-links">
+                    <a href="/">Inicio</a>
+                </li>
+                <li class="menu-links">
                     <a href="/login">Iniciar Sesion </a>
                 </li>
-                <li>
+                <li class="menu-links">
                     <a href="/register"> Registrarse </a>
                 </li>
             {{/if}}

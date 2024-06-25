@@ -1,30 +1,36 @@
-<h1>Mis Productos</h1>
-<div class="menu"></div>
+<div class="tienda">
+    <div class="intro-productos">
+        <h1>Encontra y descubri toda nuestra variedad en juguetes ideales para los mas pequeños y la familia</h1>
+    </div>
 
-{{#each productos}}
-<div class="card">
-    <img src="{{img}}" alt="" class="card-img-top">
-    <div>
-        <h2>{{title}}</h2>
-        <p>{{description}}</p>
-        <h3>Price: $ {{price}}</h3>
-        <p>Stock: {{stock}}</p>
-        <form action="/api/carts/{{../cartId}}/product/{{id}}" method="POST">
-            <button type="submit">Agregar al Carrito</button>
-        </form>
+    <div class="productos">
+        {{#each productos}}
+        <div class="producto">
+            <img src="{{img}}" alt="" class="img">
+            <div class="card">
+                <h2>{{title}}</h2>
+                <p>{{description}}</p>
+                <h3>Precio: $ {{price}}</h3>
+                <p>Stock: {{stock}}</p>
+                <form action="/api/carts/{{../cartId}}/product/{{id}}" method="POST">
+                    <button type="submit">Agregar al Carrito</button>
+                </form>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="selec-pag">
+        <div>
+            <p>Pagina {{currentPage}} de {{totalPages}} </p>
+        </div>
+        {{#if hasNextPage}}
+        <a href="/products?page={{nextPage}}"> Siguiente </a>
+        {{/if}}
+        {{#if hasPrevPage}}
+        <a href="/products?page={{prevPage}}"> Anterior </a>
+        {{/if}}
     </div>
 </div>
-{{/each}}
 
-<div>
-    {{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}"> Siguiente </a>
-    {{/if}}
-    {{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}"> Anterior </a>
-    {{/if}}
-
-    <p>Pagina {{currentPage}} de {{totalPages}} </p>
-</div>
-
-<p>CartID: {{cartId}}</p>
+{{!-- <p>CartID: {{cartId}}</p> --}}

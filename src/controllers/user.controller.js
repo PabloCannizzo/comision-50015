@@ -12,6 +12,8 @@ const mailController = new MailController();
 const answer = require("../utils/reusable.js");
 const UserRepository = require("../repositories/userRepository.js");
 const userRepository = new UserRepository();
+const upload = require("../middleware/multer.js");
+const swal = require("sweetalert");
 
 class UserController {
     async register(req, res) {
@@ -166,7 +168,7 @@ class UserController {
 
             // Enviar correo electrónico con el enlace de restablecimiento utilizando EmailService
             await mailController.enviarCorreoRestablecimiento(email, user.first_name, token);
-
+            
             res.redirect("/confirmation-send");
 
         } catch (error) {
@@ -244,7 +246,7 @@ class UserController {
         }
     }
 
-    async documents (req, res) {
+    async documents(req, res) {
         const { uid } = req.params;
         const uploadedDocuments = req.files;
 
@@ -287,5 +289,6 @@ class UserController {
         }
     }
 }
+
 
 module.exports = UserController;

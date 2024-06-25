@@ -16,7 +16,9 @@ router.get("/admin", passport.authenticate("jwt", { session: false }), userContr
 router.post("/requestPasswordReset", userController.requestPasswordReset); // Nueva ruta
 router.post('/reset-password', userController.resetPassword);
 router.put("/premium/:uid", userController.cambiarRolPremium);
-router.post(":uid/documents", upload.fields([
-    { name: 'document' }, { name: 'products' }, { name: 'profile' }]), userController.documents );
+// router.post(":uid/documents", userController.documents);
+
+router.post('/:uid/documents', upload.fields([
+    { name: 'document' }, { name: 'products' }, { name: 'profile' }]), userController.documents);
 
 module.exports = router; 

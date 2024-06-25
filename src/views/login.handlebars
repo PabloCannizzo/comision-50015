@@ -1,25 +1,29 @@
-<h1 class="h1-login">Login</h1>
-<div>
-    <form class="form" action="/api/users/login" method="POST">
-        <h2>Inicio de Sesion</h2>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Email" required>
-        </div>
-        <br>
-        <div>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-        </div>
-        <br>
-        <button type="submit">Iniciar Sesion</button>
-        <br>
-        <p>¿Olvidaste tu contraseña? <a href="/reset-password">Restablecer contraseña</a></p>
-    </form>
-    <br>
+<div class="body-login">
+    <h1 class="h1-login">Accede a tus beneficios</h1>
     <div>
-        <a href="/api/sessions/github"> GitHub </a>
+        <form class="formulario" action="/api/users/login" method="POST">
+            <h2>Inicio de Sesion</h2>
+            <div>
+                <div class="form-pr">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-pr">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="enviar">Iniciar Sesion</button>
+                <p>¿Olvidaste tu contraseña? <a href="/reset-password">Restablecer contraseña</a></p>
+            </div>
+            <div>
+                <a href="/api/sessions/github" class="github"> Inicia sesión con GitHub </a>
+            </div>
+        </form>
+        <br>
     </div>
 </div>
 
-{{!-- /api/sessions/login --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

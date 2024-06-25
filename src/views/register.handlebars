@@ -1,33 +1,29 @@
-<h1 class="h1-register">Registrate Aqui!</h1>
-<div>
-    <form class="form" action="/api/users/register" method="post">
-        <h2>Registro</h2>
-        <div>
-            <label for="first_name">Nombre:</label>
-            <input type="text" id="first_name" name="first_name" required>
-        </div>
-
-        <br>
-        <div>
-            <label for="last_name">Apellido:</label>
-            <input type="text" id="last_name" name="last_name" required>
-        </div>
-        <br>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <br>
-        <div>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <br>
-        <div>
-            <label for="age">Edad:</label>
-            <input type="number" id="age" name="age" required>
-        </div>
-        <br>
-        <button class="btn" type="submit">Registrarse</button>
-    </form>
+<div class="body-register">
+    <h1 class="h1-register">Registrate Aqui!</h1>
+    <div>
+        <form class="formulario" action="/api/users/register" method="post">
+            <h2>Registro</h2>
+            <div class="form-pr">
+                <label for="first_name">Nombre:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-pr">
+                <label for="last_name">Apellido:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-pr">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-pr">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-pr">
+                <label for="age">Edad:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <button class="enviar" type="submit">Registrarse</button>
+        </form>
+    </div>
 </div>
