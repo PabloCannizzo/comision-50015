@@ -46,7 +46,7 @@ class MailController {
                     <p>Has solicitado restablecer tu contraseña. Utiliza el siguiente código para cambiar tu contraseña:</p>
                     <p><strong>${token}</strong></p>
                     <p>Este código expirará en 1 hora.</p>
-                    <a href="http://localhost:8080/password">Restablecer Contraseña</a>
+                    <a href="https://backend-2024.up.railway.app/password">Restablecer Contraseña</a>
                     <p>Si no solicitaste este restablecimiento, ignora este correo.</p>
                 `
             };

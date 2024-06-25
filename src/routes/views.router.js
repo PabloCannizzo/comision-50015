@@ -16,7 +16,7 @@ router.get("/", viewsController.renderHome);
 // Comentado (/home)
 router.get("/reset-password", viewsController.renderResetPassword);
 router.get("/password", viewsController.renderCambioPassword);
-router.get("/confirmacion-envio", viewsController.renderConfirmacion);
+router.get("/confirmation-send", viewsController.renderConfirmacion);
 router.get("/panel-premium", viewsController.renderPremium);
 router.get("/users", viewsController.users);
 router.get("/pre-premium", viewsController.prePremium);
