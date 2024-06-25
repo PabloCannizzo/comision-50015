@@ -124,6 +124,18 @@ class ViewsController {
     async renderPremium(req, res) {
         res.render("panel-premium");
     }
+
+    async users (req, res) {
+        res.render("users");
+    }
+
+    async prePremium (req,res) {
+        res.render("pre-premium");
+    }
+
+    async contact (req,res) {
+        res.render("contact");
+    }
 }
 
 module.exports = ViewsController;

@@ -5,7 +5,7 @@
 	<p>Rol: {{user.role}}</p>
 
 	<form action="/api/users/logout" method="POST">
-		<button class="btnMios" type="submit">Logout</button>
+		<button class="btnLog" type="submit">Logout</button>
 	</form>
 
 	{{#if this.isAdmin}}
@@ -18,10 +18,7 @@
 	<a class="btnMios" href="/chat">Chat en vivo</a>
 	<a class="btnMios" href="/products">Tienda</a>
 	{{/if}}
-	{{!-- <div>
-		<h1>
-			Queres cambiarte a premium y vender tus propios productos, hace click en el siguiente enlace
-		</h1>
-		<a href="/pre-premium"> hacete premium</a>
-	</div> --}}
+
+	<p>Te gustaría vender con nosotros? Hacete premium</p>
+	<a class="btnMios" href="/pre-premium">Hacete Premium</a>
 </div>

@@ -270,6 +270,8 @@ h1 {
                         font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
                         line-height: 1.5;
                         text-transform: capitalize;
+                        color: whitesmoke;
+                        font-size: 1rem;
                     }
 
                     .opciones-links:hover {
@@ -616,4 +618,35 @@ h1 {
             background-color: #ff1f33;
         }
     }
+}
+
+.ms-5 {
+    background-color: rgb(188, 188, 240);
+    border-radius: 4rem 4rem;
+    color: black;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    image-rendering: auto;
+
+    i {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.btnMios{
+    background-color: yellow;
+    border: 2px solid black;
+    border-radius: 1rem;
+    color: #000000;
+}
+
+.btnLog{
+    background-color: red;
+    color: #000000;
+    border-radius: 1rem;
+    margin: 0.65rem;
 }

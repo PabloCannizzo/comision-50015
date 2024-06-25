@@ -3,25 +3,28 @@
         <a class="logo" href="/" class="logo">Juguetería</a>
         <ul class="menu">
             {{#if isAuthenticated}}
-                <li class="menu-links">
-                    <a href="/">Inicio</a>
-                </li>
-                <li class="menu-links">
-                    <a href="/products">Productos</a>
-                </li>
-                <li class="menu-links">
-                    <a href="/api/users/profile"> Mi Perfil </a>
-                </li>
+            <li class="menu-links">
+                <a href="/">Inicio</a>
+            </li>
+            <li class="menu-links">
+                <a href="/products">Productos</a>
+            </li>
+            <li class="menu-links">
+                <a href="/api/users/profile"> Mi Perfil </a>
+            </li>
+            <a href="/carts/{{cartId}}" class="ms-5">
+                <i class="bi bi-cart cart-icon"></i>
+            </a>
             {{else}}
-                <li class="menu-links">
-                    <a href="/">Inicio</a>
-                </li>
-                <li class="menu-links">
-                    <a href="/login">Iniciar Sesion </a>
-                </li>
-                <li class="menu-links">
-                    <a href="/register"> Registrarse </a>
-                </li>
+            <li class="menu-links">
+                <a href="/">Inicio</a>
+            </li>
+            <li class="menu-links">
+                <a href="/login">Iniciar Sesion </a>
+            </li>
+            <li class="menu-links">
+                <a href="/register"> Registrarse </a>
+            </li>
             {{/if}}
         </ul>
     </nav>

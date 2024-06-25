@@ -106,3 +106,59 @@ const cluter = require("cluster");
 const { cpus } = require("os");
 const numeroDeProcesadores = cpus().length;
 console.log("Número de procesadores:", numeroDeProcesadores);
+
+
+------------------------------------------------------------------------
+
+<div class="usuarios">
+    <div>
+        <div>
+            <h1>ID</h1>
+            <h1>Username: {{user.nombre}}</h1>
+            <h1>Current Role: {{user.role}}</h1>
+            <h1>Action</h1>
+        </div>
+        <div>
+            {{#each users}}
+            <tr>
+                <td>{{_id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{role}}</td>
+                <td>
+                    {{#ifEq role 'usuario'}}
+                    <form method="POST" enctype="multipart/form-data" action="/users/premium/{{_id}}/cambiarRolPremium">
+                        <button type="submit">Upgrade to Premium</button>
+                    </form>
+                    {{/ifEq}}
+                </td>
+            </tr>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+
+---------------------- otro metodo del anterior --------------------
+
+<div class="usuarios">
+    <form method="POST" enctype="multipart/form-data" action="/api/users/{{uid}}/document">
+        <div>
+            <label for="document">Document:</label>
+            <input type="file" id="document" name="document">
+        </div>
+        <br>
+        <div>
+            <label for="products">Products:</label>
+            <input type="file" id="products" name="products" multiple>
+        </div>
+        <br>
+        <div>
+            <label for="profile">Profile Picture:</label>
+            <input type="file" id="profile" name="profile">
+        </div>
+        <br>
+        <li>
+            <a type="submit" href="/api/profile">Cargar Documentos</a>
+        </li>
+    </form>
+</div>
